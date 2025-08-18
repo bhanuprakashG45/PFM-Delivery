@@ -42,6 +42,11 @@ dependencies:
   pin_code_fields: ^8.0.1
   pie_chart: ^5.4.0
   font_awesome_flutter: ^10.9.0
+  otp_timer_button: ^1.1.1
+  double_back_to_exit: ^1.2.1
+  image_picker: ^1.1.2
+  qr_code_scanner_plus: ^2.0.10+1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

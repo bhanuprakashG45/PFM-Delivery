@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:priya_freshmeats_delivery/utils/routes/routes_name.dart';
+import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -25,17 +24,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final colorscheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: colorscheme.primaryContainer,
+      backgroundColor: colorscheme.onPrimary,
       extendBodyBehindAppBar: true,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(
-            "assets/images/splashscreendelboy.png",
-            
-          ),
-        ],
+        children: [Image.asset("assets/images/splashscreendelboy.png")],
       ),
     );
   }

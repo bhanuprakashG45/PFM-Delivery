@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:priya_freshmeats_delivery/res/constants/theme.dart';
-import 'package:priya_freshmeats_delivery/utils/routes/routes.dart';
-import 'package:priya_freshmeats_delivery/utils/routes/routes_name.dart';
+import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,16 +17,25 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        final baseTextTheme = GoogleFonts.ptSerifTextTheme();
+        final baseTextTheme = GoogleFonts.montserratTextTheme();
         final materialTheme = MaterialTheme(baseTextTheme);
-
-        return MaterialApp(
-          navigatorKey: navigatorKey,
-          debugShowCheckedModeBanner: false,
-          title: 'Priya Fresh Meats Delivery',
-          theme: materialTheme.light(),
-          initialRoute: RoutesName.splashscreen,
-          onGenerateRoute: Routes.generateRoute,
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => BottomViewmodel()),
+            ChangeNotifierProvider(create: (_) => LoginViewModel()),
+          ],
+          child: Consumer(
+            builder: (context, LoginViewModel loginprovider, child) {
+              return MaterialApp(
+                navigatorKey: navigatorKey,
+                debugShowCheckedModeBanner: false,
+                title: 'Priya Fresh Meats Delivery',
+                theme: materialTheme.light(),
+                initialRoute: RoutesName.splashscreen,
+                onGenerateRoute: Routes.generateRoute,
+              );
+            },
+          ),
         );
       },
     );

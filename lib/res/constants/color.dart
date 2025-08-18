@@ -2,7 +2,7 @@ import 'dart:ui';
 
 class AppColor {
   static const Color success = Color(0xFF347928);
-  static const Color danger = Color(0xFFE43F5A);
+  static const Color danger = Color(0xFFD32F2F);
   static const Color warning = Color(0xFFFFAF00);
   static const Color info = Color(0xFF4379F2);
   static const Color org = Color(0xFFFF6600);

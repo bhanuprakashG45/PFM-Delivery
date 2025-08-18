@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:priya_freshmeats_delivery/res/constants/color.dart';
-import 'package:priya_freshmeats_delivery/utils/routes/routes_name.dart';
+import 'dart:ui';
+import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,163 +13,154 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    final colorscheme = Theme.of(context).colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: AppColor.primaryBlackshade,
-      body: Stack(
-        children: [
-          SizedBox(
-            height: size.height * 0.4,
-            width: double.infinity,
-            child: Image.asset(
-              'assets/images/loginscreen.jpg',
-              fit: BoxFit.cover,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/loginbg.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [colorScheme.shadow, Color(0xB3D32F2F)],
             ),
           ),
-
-          DraggableScrollableSheet(
-            initialChildSize: 0.6,
-            minChildSize: 0.6,
-            maxChildSize: 0.7,
-            builder: (context, scrollController) {
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25).r,
-                decoration: BoxDecoration(color: colorscheme.primaryContainer),
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Text(
-                          "Welcome To\n Priya Fresh Meats",
-                          style: TextStyle(
-                            letterSpacing: 1,
-                            fontSize: 35.sp,
-                            fontWeight: FontWeight.bold,
-                            color: colorscheme.primary,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      'Welcome Back',
+                      style: TextStyle(
+                        color: colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40.sp,
                       ),
-                      SizedBox(height: 30.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: colorscheme.secondary,
-                              thickness: 1,
-                              endIndent: 8,
-                            ),
-                          ),
-                          Text(
-                            " Login or Sign Up ",
-                            style: TextStyle(
-                              color: colorscheme.onPrimary,
-                              fontSize: 18.0.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: colorscheme.secondary,
-                              thickness: 1,
-                              endIndent: 8,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 20),
-                      TextField(
-                        controller: phoneController,
-                        keyboardType: TextInputType.phone,
-                        maxLength: 10,
-                        style: TextStyle(color: colorscheme.onPrimary),
-                        decoration: InputDecoration(
-                          prefixText: '+91 | ',
-                          prefixStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18.0.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          hintText: " Enter Phone Number",
-                          hintStyle: TextStyle(
-                            color: colorscheme.onPrimary,
-                            fontSize: 18.0.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          counterText: "",
-                          filled: true,
-                          fillColor: colorscheme.primaryContainer,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12).r,
-                            borderSide: BorderSide(
-                              color: colorscheme.onPrimary,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12).r,
-                            borderSide: BorderSide(
-                              color: colorscheme.onPrimary,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12).r,
-                            borderSide: BorderSide(
-                              color: colorscheme.onPrimary,
-                            ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12).r,
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12).r,
-                            borderSide: BorderSide(
-                              color: colorscheme.onPrimary,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: 20.h),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              RoutesName.otpscreen,
-                              arguments: phoneController.text,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: colorscheme.primary,
-                            padding:  EdgeInsets.symmetric(vertical: 15.w),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10).r,
-                            ),
-                          ),
-                          child: Text(
-                            "Continue",
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.textWhite,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              );
-            },
+                  SizedBox(height: 8.h),
+                  Center(
+                    child: Text(
+                      'Sign in to continue',
+                      style: GoogleFonts.alata(
+                        color: colorScheme.onPrimary,
+                        fontSize: 18.sp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30.h),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16).r,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+                      child: Card(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16).r,
+                        ),
+                        color: Color(0x33FFB3B3),
+
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.symmetric(
+                                vertical: 25,
+                                horizontal: 20,
+                              ).r,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Enter Phone Number",
+                                style: GoogleFonts.alata(
+                                  letterSpacing: 1,
+                                  color: colorScheme.onPrimary,
+                                  // fontWeight: FontWeight.bold,
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              TextField(
+                                controller: phoneController,
+                                decoration: InputDecoration(
+                                  hintText: 'Phone',
+                                  hintStyle: GoogleFonts.alata(
+                                    color: colorScheme.onSurface,
+                                    fontSize: 15.sp,
+                                  ),
+
+                                  prefixIcon: Icon(
+                                    Icons.phone,
+                                    color: colorScheme.primary,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(
+                                      color: colorScheme.outline,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(
+                                      color: colorScheme.outline,
+                                    ),
+                                  ),
+
+                                  filled: true,
+                                  fillColor: colorScheme.primaryContainer,
+                                ),
+                                keyboardType: TextInputType.phone,
+                              ),
+                              SizedBox(height: 16.h),
+
+                              SizedBox(height: 20.h),
+
+                              Center(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      RoutesName.otpscreen,
+                                      arguments: phoneController.text.trim(),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(60.w, 50.h),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    backgroundColor: colorScheme.primary,
+                                    foregroundColor: colorScheme.onPrimary,
+                                    elevation: 4,
+                                  ),
+                                  child: Text(
+                                    'Send OTP',
+                                    style: GoogleFonts.alata(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ],
+        ),
       ),
     );
   }

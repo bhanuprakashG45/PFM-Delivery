@@ -1,12 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:priya_freshmeats_delivery/utils/routes/routes_name.dart';
-import 'package:priya_freshmeats_delivery/view/auth/login_screen.dart';
-import 'package:priya_freshmeats_delivery/view/auth/otp_screen.dart';
-import 'package:priya_freshmeats_delivery/view/home/home_screen.dart';
-import 'package:priya_freshmeats_delivery/view/home/notification_screen.dart';
-import 'package:priya_freshmeats_delivery/view/orders/order_details_screen.dart';
-import 'package:priya_freshmeats_delivery/view/profile/profile_screen.dart';
-import 'package:priya_freshmeats_delivery/view/splash/splash_screen.dart';
+import 'package:priya_freshmeats_delivery/utils/exports.dart';
+import 'package:priya_freshmeats_delivery/view/orders/notdelivered_screen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -23,7 +16,7 @@ class Routes {
         final phoneNumber = settings.arguments as String;
         return MaterialPageRoute(
           builder:
-              (BuildContext context) => OtpScreen(phoneNumber: phoneNumber),
+              (BuildContext context) => OtpScreen(phonenumber: phoneNumber),
         );
       case RoutesName.homescreen:
         return MaterialPageRoute(
@@ -38,10 +31,32 @@ class Routes {
           builder: (BuildContext context) => const NotificationScreen(),
         );
       case RoutesName.orderdetailsscreen:
-        final orderId = settings.arguments as String;
         return MaterialPageRoute(
-          builder:
-              (BuildContext context) => OrderDetailsScreen(orderId: orderId),
+          builder: (BuildContext context) => OrderDetailsScreen(),
+        );
+      case RoutesName.bottomnavbar:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => BottomNavBar(initialIndex: 0),
+        );
+      case RoutesName.orderaddressscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const OrderAddressScreen(),
+        );
+      case RoutesName.viewallordersscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const ViewallOrdersScreen(),
+        );
+      case RoutesName.ordersscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const OrdersScreen(),
+        );
+      case RoutesName.mydocumentsscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => MydocumentsScreen(),
+        );
+      case RoutesName.notDeliveredScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) =>const NotDeliveredScreen(),
         );
 
       default:

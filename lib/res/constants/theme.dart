@@ -7,52 +7,51 @@ class MaterialTheme {
   static ColorScheme lightScheme() {
     return ColorScheme(
       brightness: Brightness.light,
-      primary: Color(0xFF802641),
-      surfaceTint: Color(0xFFF2F2F2),
-      onPrimary: Color(0xFF2a3b56),
-      primaryContainer: Color(0xFFf4f4f4),
-      onPrimaryContainer: Color(0xFF000000),
-      secondary: Color(0xFF8b95a2), // Secondary color
-      onSecondary: Colors.blueGrey.shade400, // Text color on secondary
-      secondaryContainer: Color(0xFFF3F4F6), // Secondary container color
-      onSecondaryContainer:
-          Colors.blueGrey.shade100, // Text color on secondary container
-      tertiary: Color(0xFF000033), // Tertiary color
-      onTertiary: Color(0xff), // Text color on tertiary
-      tertiaryContainer: Color(0xff), // Lightened tertiary container color
-      onTertiaryContainer: Color(0xff), // Text color on tertiary container
-      error: Color(0xFFB00020), // Error color
-      onError: Colors.white, // Text color on error
-      errorContainer: Color(0xFFFFDAD6), // Error container color
-      onErrorContainer: Color(0xFFB00020), // Text color on error container
-      surface: Colors.grey[50]!, // Surface color (light theme)
-      onSurface: Colors.black, // Text color on surface
-      onSurfaceVariant: Color(0xFF), // On surface variant
-      outline: Color(0xFF), // Outline color
-      outlineVariant: Color(0xFF), // Outline variant
-      shadow: Color(0xFF), // Shadow color
-      scrim: Color(0xFF), // Scrim color
-      inverseSurface: Color(0xFF), // Inverse surface color
-      inversePrimary: Color(0xFF), // Inverse primary color
-      primaryFixed: Color(0xFF), // Fixed primary color
-      onPrimaryFixed: Colors.black, // Text color on fixed primary
-      primaryFixedDim: Color(0xFF), // Dimmed primary color
-      onPrimaryFixedVariant: Color(0xFF), // Fixed primary variant color
-      secondaryFixed: Color(0xFF), // Fixed secondary color
-      onSecondaryFixed: Colors.white, // Text color on fixed secondary
-      secondaryFixedDim: Color(0xFF), // Dimmed fixed secondary color
-      onSecondaryFixedVariant: Color(0xFF), // Fixed secondary variant color
-      tertiaryFixed: Color(0xFF), // Fixed tertiary color
-      onTertiaryFixed: Colors.black, // Text color on fixed tertiary
-      tertiaryFixedDim: Color(0xFF), // Dimmed fixed tertiary color
-      onTertiaryFixedVariant: Color(0xFF), // Fixed tertiary variant color
-      surfaceDim: Color(0xFF), // Dimmed surface color
-      surfaceBright: Color(0xFF), // Bright surface color
-      surfaceContainerLowest: Color(0xFF), // Lowest container surface
-      surfaceContainerLow: Color(0xFF), // Low container surface
-      surfaceContainer: Color(0xFF), // Medium container surface
-      surfaceContainerHigh: Color(0xFF), // High container surface
-      surfaceContainerHighest: Color(0xFF), // Highest container surface
+      primary: Color(0xFFD32F2F), // Vibrant red
+      surfaceTint: Color(0xFF9A1D1D), // Darker red for surface tint
+      onPrimary: Color(0xFFFFFFFF), // White for contrast on red
+      primaryContainer: Color(0xFFFFDAD6), // Light red/pink container
+      onPrimaryContainer: Color(0xFF68000A), // Dark red for text/icons
+      secondary: Color(0xFF6B5B5B), // Unchanged neutral grayish secondary
+      onSecondary: Color(0xFFFFFFFF),
+      secondaryContainer: Color(0xFFF3D9DC),
+      onSecondaryContainer: Color(0xFF4A3C3D),
+      tertiary: Color(0xFF7B5733), // Unchanged warm brown tertiary
+      onTertiary: Color(0xFFFFFFFF),
+      tertiaryContainer: Color(0xFFFFDDB8),
+      onTertiaryContainer: Color(0xFF3F2A0C),
+      error: Color(0xFFBA1A1A), // Unchanged error
+      onError: Color(0xFFFFFFFF),
+      errorContainer: Color(0xFFFFDAD6),
+      onErrorContainer: Color(0xFF93000A),
+      surface: Color(0xFFFFF7F8), // Unchanged surface
+      onSurface: Color(0xFF1F1A1B),
+      onSurfaceVariant: Color(0xFF4F4344),
+      outline: Color(0xFF827374),
+      outlineVariant: Color(0xFFD5C2C3),
+      shadow: Color(0x99000000),
+      scrim: Color(0xFF000000),
+      inverseSurface: Color(0xFF352F30),
+      inversePrimary: Color(0xFFFFB3B3), // Light red for inverse
+      primaryFixed: Color(0xFFFFDAD6), // Light red container
+      onPrimaryFixed: Color(0xFF3B000D), // Dark red for contrast
+      primaryFixedDim: Color(0xFFFFB3B3), // Dimmed red
+      onPrimaryFixedVariant: Color(0xFF8B1E2E), // Darker red variant
+      secondaryFixed: Color(0xFFF3D9DC),
+      onSecondaryFixed: Color(0xFF2A1618),
+      secondaryFixedDim: Color(0xFFD7BEC0),
+      onSecondaryFixedVariant: Color(0xFF534243),
+      tertiaryFixed: Color(0xFFFFDDB8),
+      onTertiaryFixed: Color(0xFF281500),
+      tertiaryFixedDim: Color(0xFFE8BE8F),
+      onTertiaryFixedVariant: Color(0xFF5D401B),
+      surfaceDim: Color(0xFFE4D6D7),
+      surfaceBright: Color(0xFFFFF7F8),
+      surfaceContainerLowest: Color(0xFFFFFFFF),
+      surfaceContainerLow: Color(0xFFFFF0F1),
+      surfaceContainer: Color(0xFFFAEAEB),
+      surfaceContainerHigh: Color(0xFFF4E4E5),
+      surfaceContainerHighest: Color(0xFFEEDFE0),
     );
   }
 
@@ -63,7 +62,7 @@ class MaterialTheme {
   static ColorScheme darkScheme() {
     return ColorScheme(
       brightness: Brightness.dark,
-      primary: Color(0xFF348B5F), 
+      primary: Color(0xFF348B5F),
       surfaceTint: Color(0xff3572EF), // Surface tint for dark theme
       onPrimary: Color(0xFFB3B3B3), // Text color on primary
       primaryContainer: Color(
@@ -98,7 +97,7 @@ class MaterialTheme {
       inversePrimary: Color(0xff3572EF), // Inverse primary color
       primaryFixed: Color(0xff3572EF), // Fixed primary color
       onPrimaryFixed: Colors.black, // Text color on fixed primary
-      primaryFixedDim: Colors.blue.withOpacity(0.8), // Dimmed primary color
+      // primaryFixedDim: Colors.blue.withOpacity(0.8), // Dimmed primary color
       onPrimaryFixedVariant: Color(0xFF6C63FF), // Fixed primary variant color
       secondaryFixed: Color(0xFF4D4D50), // Fixed secondary color
       onSecondaryFixed: Colors.white, // Text color on fixed secondary
