@@ -9,15 +9,16 @@ void showEditNameDialog(BuildContext context, {required String currentName}) {
     context: context,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: Colors.white,
         insetPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12).r,
         ),
         title: Text(
           'Edit Name',
-          style: GoogleFonts.alata(
+          style: GoogleFonts.poppins(
             fontSize: 22.sp,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
         ),
         content: Column(
@@ -27,7 +28,7 @@ void showEditNameDialog(BuildContext context, {required String currentName}) {
               controller: nameController,
               decoration: InputDecoration(
                 labelText: 'Name',
-                labelStyle: GoogleFonts.alata(
+                labelStyle: GoogleFonts.poppins(
                   fontSize: 16.sp,
                   color: AppColor.primaryBlackshade,
                 ),
@@ -35,7 +36,10 @@ void showEditNameDialog(BuildContext context, {required String currentName}) {
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
-              style: GoogleFonts.alata(fontSize: 16.sp),
+              style: GoogleFonts.poppins(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -52,10 +56,10 @@ void showEditNameDialog(BuildContext context, {required String currentName}) {
                 icon: Icon(Icons.close_rounded, color: AppColor.textWhite),
                 label: Text(
                   'Cancel',
-                  style: GoogleFonts.alata(
+                  style: GoogleFonts.poppins(
                     color: AppColor.textWhite,
                     fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -79,10 +83,10 @@ void showEditNameDialog(BuildContext context, {required String currentName}) {
                 icon: Icon(Icons.save, color: AppColor.primaryBlack),
                 label: Text(
                   'Save',
-                  style: GoogleFonts.alata(
+                  style: GoogleFonts.poppins(
                     color: AppColor.primaryBlack,
                     fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(

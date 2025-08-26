@@ -7,18 +7,18 @@ class MydocumentsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorscheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: colorscheme.surface,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'My Documents',
-          style: TextStyle(
+          style: GoogleFonts.poppins(
             color: AppColor.primaryBlack,
             fontSize: 22.0.sp,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
-        backgroundColor: colorscheme.surface,
+        backgroundColor: colorscheme.onPrimary,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16).r,
@@ -54,21 +54,52 @@ class DocumentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    final colorsheme = Theme.of(context).colorScheme;
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(255, 230, 229, 229),
+            spreadRadius: 4,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+          BoxShadow(
+            color: Colors.white.withOpacity(0.6),
+            spreadRadius: -4,
+            blurRadius: 10,
+            offset: Offset(0, -2),
+          ),
+        ],
+
+        borderRadius: BorderRadius.circular(25).r,
+      ),
+
       child: ListTile(
         contentPadding: const EdgeInsets.all(16).r,
-        leading: Icon(icon, size: 40.sp, color: Colors.blue),
+        leading: Icon(icon, size: 30.sp, color: colorsheme.primary),
         title: Text(
           title,
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+          style: GoogleFonts.poppins(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        subtitle: Text(description),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16.sp),
-        onTap: () {
-         
-        },
+        subtitle: Text(
+          description,
+          style: GoogleFonts.poppins(
+            fontSize: 15.sp,
+            color: AppColor.secondaryBlack,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        trailing: Icon(
+          Icons.verified,
+          size: 25.sp,
+          color: Colors.green.shade400,
+        ),
+        onTap: () {},
       ),
     );
   }

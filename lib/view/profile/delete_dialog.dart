@@ -5,22 +5,23 @@ void showDeleteAccountDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: Colors.white,
         insetPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
         title: Text(
           'Delete Account',
-          style: GoogleFonts.alata(
+          style: GoogleFonts.poppins(
             fontSize: 25.sp,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
         ),
         content: Text(
           'Are you sure you want to delete your account?',
-          style: GoogleFonts.alata(
+          style: GoogleFonts.poppins(
             fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
             color: AppColor.primaryBlackshade,
           ),
         ),
@@ -37,10 +38,10 @@ void showDeleteAccountDialog(BuildContext context) {
                 icon: Icon(Icons.close_rounded, color: AppColor.textWhite),
                 label: Text(
                   'Cancel',
-                  style: GoogleFonts.alata(
+                  style: GoogleFonts.poppins(
                     color: AppColor.textWhite,
                     fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -65,10 +66,10 @@ void showDeleteAccountDialog(BuildContext context) {
                 icon: Icon(Icons.delete, color: AppColor.primaryBlack),
                 label: Text(
                   'Delete',
-                  style: GoogleFonts.alata(
+                  style: GoogleFonts.poppins(
                     color: AppColor.primaryBlack,
                     fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(

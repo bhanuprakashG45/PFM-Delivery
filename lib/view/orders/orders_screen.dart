@@ -13,7 +13,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorscheme = Theme.of(context).colorScheme;
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -24,12 +23,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        // leading: InkWell(
-        //   onTap: () {
-        //     Navigator.pop(context);
-        //   },
-        //   child: Icon(Icons.arrow_back),
-        // ),
+        backgroundColor: Colors.white,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(80.h),
           child: Padding(
@@ -49,10 +43,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 width: width * 0.9,
                 height: 45.h,
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: colorscheme.secondaryContainer,
-                    width: 0.5,
-                  ),
+                  border: Border.all(color: AppColor.primaryBlack, width: 0.2),
                   borderRadius: BorderRadius.circular(15).r,
                 ),
                 child: Stack(
@@ -81,11 +72,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           child: Center(
                             child: Text(
                               "OnGoing",
-                              style: GoogleFonts.alata(
-                                fontSize: 16.0.sp,
+                              style: GoogleFonts.poppins(
+                                fontSize: 18.0.sp,
+
                                 color:
                                     isOngoing ? Colors.white : Colors.black87,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -94,11 +86,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           child: Center(
                             child: Text(
                               "Completed",
-                              style: GoogleFonts.alata(
-                                fontSize: 16.0.sp,
+                              style: GoogleFonts.poppins(
+                                fontSize: 18.0.sp,
                                 color:
                                     !isOngoing ? Colors.white : Colors.black87,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -112,6 +104,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           ),
         ),
       ),
+      backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
@@ -135,9 +128,28 @@ class OnGoingOrdersTab extends StatelessWidget {
       itemCount: 1,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10).r,
-          child: Card(
-            margin: EdgeInsets.all(10).r,
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10).r,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 230, 229, 229),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+                BoxShadow(
+                  color: Colors.white.withOpacity(0.6),
+                  spreadRadius: -4,
+                  blurRadius: 10,
+                  offset: Offset(0, -2),
+                ),
+              ],
+
+              borderRadius: BorderRadius.circular(25).r,
+            ),
+
             child: ListTile(
               leading: FaIcon(
                 FontAwesomeIcons.motorcycle,
@@ -145,16 +157,18 @@ class OnGoingOrdersTab extends StatelessWidget {
               ),
               title: Text(
                 'Order #00${index + 1}',
-                style: GoogleFonts.alata(
-                  fontSize: 20.0.sp,
-                  fontWeight: FontWeight.w500,
+                style: GoogleFonts.poppins(
+                  color: AppColor.primaryBlack,
+                  fontSize: 18.0.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               subtitle: Text(
                 'Estimated Delivery: 7:00 PM',
-                style: GoogleFonts.alata(
-                  fontSize: 18.0.sp,
-                  fontWeight: FontWeight.w400,
+                style: GoogleFonts.poppins(
+                  color: AppColor.secondaryBlack,
+                  fontSize: 15.0.sp,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               // trailing: Text(
@@ -183,8 +197,27 @@ class CompletedOrdersTab extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(10.0).r,
-          child: Card(
-            margin: EdgeInsets.only(left: 10, right: 10).r,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 230, 229, 229),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+                BoxShadow(
+                  color: Colors.white.withOpacity(0.6),
+                  spreadRadius: -4,
+                  blurRadius: 10,
+                  offset: Offset(0, -2),
+                ),
+              ],
+
+              borderRadius: BorderRadius.circular(25).r,
+            ),
+
             child: ListTile(
               leading: Image.asset(
                 "assets/images/accept.png",
@@ -194,16 +227,16 @@ class CompletedOrdersTab extends StatelessWidget {
               ),
               title: Text(
                 'Order #10${index + 1}',
-                style: GoogleFonts.alata(
-                  fontSize: 20.0.sp,
-                  fontWeight: FontWeight.w400,
+                style: GoogleFonts.poppins(
+                  fontSize: 18.0.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               subtitle: Text(
                 'Delivered on: 05 Aug 2025',
-                style: GoogleFonts.alata(
-                  fontSize: 18.0.sp,
-                  fontWeight: FontWeight.w400,
+                style: GoogleFonts.poppins(
+                  fontSize: 15.0.sp,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

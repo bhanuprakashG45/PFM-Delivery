@@ -26,6 +26,6 @@ class AppColor {
   static const Color pastelBrown = Color(0xFFE8DDD9);
   static const Color scaffoldBg1 = Color(0xFFF7F4F2);
   static const Color white = Color(0xFFFFFFFF);
-  static const Color black = Color(0xFF000000);
+  static const Color blackshade = Color(0xFF0C0C0C);
   static const Color secondaryBlack = Color(0xFF736B66);
 }

@@ -16,7 +16,7 @@ class MaterialTheme {
       onSecondary: Color(0xFFFFFFFF),
       secondaryContainer: Color(0xFFF3D9DC),
       onSecondaryContainer: Color(0xFF4A3C3D),
-      tertiary: Color(0xFF7B5733), // Unchanged warm brown tertiary
+      tertiary: Colors.grey.shade300,
       onTertiary: Color(0xFFFFFFFF),
       tertiaryContainer: Color(0xFFFFDDB8),
       onTertiaryContainer: Color(0xFF3F2A0C),

@@ -1,7 +1,10 @@
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
+import 'package:priya_freshmeats_delivery/view_model/orders_vm/orders_viewmodel.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class OrderAddressScreen extends StatefulWidget {
-  const OrderAddressScreen({super.key});
+  final orderId;
+  const OrderAddressScreen({super.key, this.orderId});
 
   @override
   State<OrderAddressScreen> createState() => _OrderAddressScreenState();
@@ -10,9 +13,11 @@ class OrderAddressScreen extends StatefulWidget {
 class _OrderAddressScreenState extends State<OrderAddressScreen> {
   bool isOrderAccepted = false;
 
-  Future<void> _launchMap() async {
+  Future<void> _launchMap(double lat, double long) async {
+    debugPrint("lat :$lat");
+    debugPrint("long :$long");
     final Uri uri = Uri.parse(
-      "https://www.google.com/maps/search/?api=1&query=12.9186,77.5163",
+      "https://www.google.com/maps/search/?api=1&query=$long,$lat",
     );
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $uri');
@@ -32,180 +37,156 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
   Widget build(BuildContext context) {
     final colorscheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: colorscheme.surface,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Order Address',
-          style: TextStyle(
+          style: GoogleFonts.poppins(
             color: AppColor.primaryBlack,
             fontSize: 22.0.sp,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
-        backgroundColor: colorscheme.surface,
+        backgroundColor: colorscheme.onPrimary,
       ),
       body: SafeArea(
         top: false,
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0).r,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Card(
-                  elevation: 1,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25).r,
-                  ),
-
+          child: Consumer<OrdersViewmodel>(
+            builder: (context, orderdetailsprovider, child) {
+              final customerdata = orderdetailsprovider.customerdata;
+              return Skeletonizer(
+                enabled: orderdetailsprovider.isOrderAccepting,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0).r,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25.r),
-                            topRight: Radius.circular(25.r),
-                          ),
-                          child: Image.asset(
-                            'assets/images/acceptorder.jpeg',
-                            height: 300.h,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color.fromARGB(255, 230, 229, 229),
+                              spreadRadius: 4,
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.6),
+                              spreadRadius: -4,
+                              blurRadius: 10,
+                              offset: Offset(0, -2),
+                            ),
+                          ],
+
+                          borderRadius: BorderRadius.circular(25).r,
                         ),
-                      ),
-                      SizedBox(height: 10.h),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0).r,
+
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Sumukh Mohan",
-                                  style: GoogleFonts.alata(
-                                    fontSize: 22.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColor.primaryBlack,
-                                  ),
+                            Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25.r),
+                                  topRight: Radius.circular(25.r),
                                 ),
-                              ],
-                            ),
-                            SizedBox(height: 10.h),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Chicken curry cut with skin,a pop of flavor and a hint of spice, perfect for your next meal.",
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: colorscheme.secondary,
+                                child: Image.asset(
+                                  'assets/images/acceptorder.jpeg',
+                                  height: 300.h,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-
                             SizedBox(height: 10.h),
-
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(width: 2.0.w),
-                                FaIcon(
-                                  FontAwesomeIcons.locationDot,
-                                  color: const Color.fromARGB(
-                                    255,
-                                    251,
-                                    103,
-                                    93,
-                                  ),
-                                ),
-                                SizedBox(width: 10.w),
-                                Expanded(
-                                  child: Text(
-                                    "JP Nagar, Bangalore, Karnataka",
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: colorscheme.secondary,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10.h),
-
-                            Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(40).r,
-                                  ),
-                                  child: Icon(
-                                    Icons.bolt_rounded,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(width: 10.w),
-                                Text(
-                                  "Today in 30 mins",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: colorscheme.secondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                isOrderAccepted
-                    ? Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  RoutesName.bottomnavbar,
-
-                                  arguments: PageController(initialPage: 0),
-                                  (route) => false,
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green.shade400,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15).r,
-                                ),
-                              ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0).r,
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
+                                      Text(
+                                        customerdata.clientName,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 22.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColor.primaryBlack,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      customerdata.orderDetails.isEmpty
+                                          ? "Chicken curry cut with skin,a pop of flavor and a hint of spice, perfect for your next meal."
+                                          : customerdata.orderDetails[0].name,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColor.secondaryBlack,
+                                      ),
+                                    ),
+                                  ),
+
+                                  SizedBox(height: 10.h),
+
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(width: 2.0.w),
                                       FaIcon(
-                                        FontAwesomeIcons.thumbsUp,
-                                        color: Colors.white,
-                                        size: 15.sp,
+                                        FontAwesomeIcons.locationDot,
+                                        color: const Color.fromARGB(
+                                          255,
+                                          251,
+                                          103,
+                                          93,
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.w),
+                                      Expanded(
+                                        child: Text(
+                                          // "JP Nagar, Bangalore, Karnataka",
+                                          customerdata.location,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColor.primaryBlackshade,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.h),
+
+                                  Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.amber,
+                                          borderRadius:
+                                              BorderRadius.circular(40).r,
+                                        ),
+                                        child: Icon(
+                                          Icons.bolt_rounded,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                       SizedBox(width: 10.w),
                                       Text(
-                                        "Order Delivered",
-                                        style: GoogleFonts.alata(
-                                          fontSize: 20.sp,
-                                          color: Colors.white,
+                                        "Today in 30 mins",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColor.primaryBlackshade,
                                         ),
                                       ),
                                     ],
@@ -215,122 +196,205 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
                             ),
                           ],
                         ),
+                      ),
+                      SizedBox(height: 20.h),
+                      isOrderAccepted
+                          ? Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        RoutesName.bottomnavbar,
 
-                        // SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  RoutesName.notDeliveredScreen,
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red.shade400,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15).r,
-                                ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      FaIcon(
-                                        FontAwesomeIcons.thumbsDown,
-                                        color: Colors.white,
-                                        size: 15.sp,
-                                      ),
-                                      SizedBox(width: 10.w),
-                                      Text(
-                                        "Not Delivered",
-                                        style: GoogleFonts.alata(
-                                          fontSize: 20.sp,
-                                          color: Colors.white,
+                                        arguments: PageController(
+                                          initialPage: 0,
                                         ),
+                                        (route) => false,
+                                      );
+                                      await orderdetailsprovider.orderDelivered(
+                                        context,
+                                        widget.orderId,
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green.shade400,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15).r,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                    : Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () async {
-                                await _launchMap();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: colorscheme.primary,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15).r,
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.locationDot,
-                                    color: Colors.white,
-                                    size: 20.sp,
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Text(
-                                    "Initiate Delivery",
-                                    style: GoogleFonts.alata(
-                                      fontSize: 20.sp,
-                                      color: Colors.white,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            FaIcon(
+                                              FontAwesomeIcons.thumbsUp,
+                                              color: Colors.white,
+                                              size: 15.sp,
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Text(
+                                              "Order Delivered",
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 20.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10.h),
-                      ],
-                    ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        await makePhoneCall('+91', "9110328582");
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lightBlue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15).r,
-                        ),
-                      ),
-                      child: Row(
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        RoutesName.notDeliveredScreen,
+                                        arguments: widget.orderId,
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.red.shade400,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15).r,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            FaIcon(
+                                              FontAwesomeIcons.thumbsDown,
+                                              color: Colors.white,
+                                              size: 15.sp,
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Text(
+                                              "Not Delivered",
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 20.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                          : Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      final lat =
+                                          customerdata
+                                              .geoLocation
+                                              .coordinates[0];
+                                      final long =
+                                          customerdata
+                                              .geoLocation
+                                              .coordinates[1];
+                                      await _launchMap(lat, long);
+                                      await orderdetailsprovider
+                                          .initiateDelivery(
+                                            context,
+                                            widget.orderId,
+                                          );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: colorscheme.primary,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15).r,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        FaIcon(
+                                          FontAwesomeIcons.locationDot,
+                                          color: Colors.white,
+                                          size: 20.sp,
+                                        ),
+                                        SizedBox(width: 10.w),
+                                        Text(
+                                          "Initiate Delivery",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.h),
+                            ],
+                          ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.call, color: Colors.white, size: 20.sp),
-                          SizedBox(width: 10.w),
-                          Text(
-                            "Call Customer",
-                            style: GoogleFonts.alata(
-                              fontSize: 20.sp,
-                              color: Colors.white,
+                          ElevatedButton(
+                            onPressed: () async {
+                              final contactNumber = customerdata.phone;
+                              await makePhoneCall('+91', contactNumber);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.lightBlue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15).r,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.call,
+                                  color: Colors.white,
+                                  size: 20.sp,
+                                ),
+                                SizedBox(width: 10.w),
+                                Text(
+                                  "Call Customer",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),

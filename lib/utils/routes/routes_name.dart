@@ -13,4 +13,6 @@ class RoutesName {
   static const String viewallordersscreen = "viewallordersscreen";
   static const String mydocumentsscreen = "mydocumnetsscreen";
   static const String notDeliveredScreen = "notDeliveredScreen";
+  static const String privacypolicyscreen = "privacypolicyscreen";
+  static const String termsandconditions = "termsandconditions";
 }

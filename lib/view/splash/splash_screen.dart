@@ -8,6 +8,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final SharedPref _pref = SharedPref();
   @override
   void initState() {
     super.initState();
@@ -16,7 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _navigateAfterDelay() async {
     Future.delayed(Duration(seconds: 5), () async {
-      Navigator.pushReplacementNamed(context, RoutesName.loginscreen);
+      String? token = await _pref.getAccessToken();
+      debugPrint("token:$token");
+      if (token != null) {
+        Navigator.pushReplacementNamed(context, RoutesName.bottomnavbar);
+      } else {
+        Navigator.pushReplacementNamed(context, RoutesName.loginscreen);
+      }
     });
   }
 

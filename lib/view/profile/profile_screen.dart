@@ -25,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: Colors.white,
       body: SafeArea(
         top: false,
         child: SingleChildScrollView(
@@ -62,10 +63,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(height: 5.h),
                         Text(
                           "Bhanuprakash",
-                          style: GoogleFonts.alata(
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onError,
-                            fontSize: 28.sp,
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.primaryBlack,
+                            fontSize: 20.sp,
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+
+                        Text(
+                          "+91 9110328582",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.primaryBlackshade,
+                            fontSize: 16.sp,
                           ),
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -84,13 +96,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       () async {
                         await makePhoneCall('+91', "9876543210");
                       },
-                      Icons.phone_sharp,
+                      Icons.call_outlined,
                       "Contact Us",
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.all(8.0).r,
-                      child: Divider(),
+                      padding: const EdgeInsets.symmetric(vertical: 8).r,
+                      child: Divider(color: colorScheme.tertiary),
                     ),
                     buildRowWithIcon(
                       () {
@@ -99,38 +111,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           RoutesName.mydocumentsscreen,
                         );
                       },
-                      FontAwesomeIcons.fileContract,
+                      FontAwesomeIcons.file,
                       "My Documents",
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.all(8.0).r,
-                      child: Divider(),
-                    ),
-                    buildRowWithIcon(
-                      () {
-                        Navigator.pushNamed(context, RoutesName.ordersscreen);
-                      },
-                      Icons.restaurant_menu_outlined,
-                      "Orders",
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.all(8.0).r,
-                      child: Divider(),
+                      padding: const EdgeInsets.symmetric(vertical: 8).r,
+                      child: Divider(color: colorScheme.tertiary),
                     ),
 
                     buildRowWithIcon(
                       () {
                         showEditNameDialog(context, currentName: name);
                       },
-                      Icons.edit,
+                      FontAwesomeIcons.penToSquare,
                       "Edit Profile",
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8).r,
+                      child: Divider(color: colorScheme.tertiary),
+                    ),
+
+                    buildRowWithIcon(
+                      () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.termsandconditions,
+                        );
+                      },
+                      Icons.file_open_outlined,
+                      "Terms & Conditions",
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8).r,
+                      child: Divider(color: colorScheme.tertiary),
+                    ),
+
+                    buildRowWithIcon(
+                      () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.privacypolicyscreen,
+                        );
+                      },
+                      FontAwesomeIcons.shieldHalved,
+                      "Privacy Policy",
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.all(8.0).r,
-                      child: Divider(),
+                      padding: const EdgeInsets.symmetric(vertical: 8).r,
+                      child: Divider(color: colorScheme.tertiary),
                     ),
 
                     buildRowWithIcon(
@@ -142,8 +172,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.all(8.0).r,
-                      child: Divider(),
+                      padding: const EdgeInsets.symmetric(vertical: 8).r,
+                      child: Divider(color: colorScheme.tertiary),
                     ),
 
                     buildRowWithIcon(
@@ -169,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String label, [
     Color? iconColor,
   ]) {
-    final colorScheme = Theme.of(context).colorScheme;
+    // final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.h),
@@ -178,20 +208,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            FaIcon(icon, color: colorScheme.outline, size: 22.sp),
+            FaIcon(icon, color: Color(0xFF7D7C7C), size: 22.sp),
             SizedBox(width: 15.w),
             Expanded(
               flex: 1,
               child: Text(
                 label,
-                style: GoogleFonts.alata(
-                  fontSize: 20.sp,
-                  color: colorScheme.shadow,
+                style: GoogleFonts.poppins(
+                  fontSize: 15.sp,
+                  color: AppColor.primaryBlack,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
 
-            FaIcon(Icons.keyboard_arrow_right_outlined, size: 30.sp),
+            FaIcon(
+              Icons.keyboard_arrow_right_outlined,
+              color: Color(0xFF7D7C7C),
+              size: 25.sp,
+            ),
           ],
         ),
       ),

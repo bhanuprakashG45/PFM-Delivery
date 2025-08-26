@@ -21,18 +21,20 @@ class _HomeScreenState extends State<HomeScreen> {
     final colorscheme = Theme.of(context).colorScheme;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Welcome , Bhanuprakash",
-          style: TextStyle(
+          style: GoogleFonts.poppins(
             fontSize: 25.sp,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
             color: AppColor.primaryBlack,
           ),
           textAlign: TextAlign.start,
         ),
         automaticallyImplyLeading: false,
-        surfaceTintColor: colorscheme.surface,
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         top: false,
@@ -51,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 45.h,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: colorscheme.secondaryContainer,
-                          width: 0.5,
+                          color: AppColor.primaryBlackshade,
+                          width: 0.2,
                         ),
                         borderRadius: BorderRadius.circular(20).r,
                       ),
@@ -82,12 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Center(
                                   child: Text(
                                     "Online",
-                                    style: GoogleFonts.alata(
+                                    style: GoogleFonts.poppins(
                                       color:
                                           isOnline
                                               ? Colors.white
                                               : Colors.black,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 17.0.sp,
                                     ),
                                   ),
@@ -97,12 +99,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Center(
                                   child: Text(
                                     "Offline",
-                                    style: GoogleFonts.alata(
+                                    style: GoogleFonts.poppins(
                                       color:
                                           !isOnline
                                               ? Colors.white
                                               : Colors.black,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 17.0.sp,
                                     ),
                                   ),
@@ -141,8 +143,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: 20.0.h),
 
-                Card(
-                  elevation: 1,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15).r,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 230, 229, 229),
+                        spreadRadius: 4,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.6),
+                        spreadRadius: -4,
+                        blurRadius: 10,
+                        offset: Offset(0, -2),
+                      ),
+                    ],
+                  ),
+
                   child: Padding(
                     padding: const EdgeInsets.all(10.0).r,
                     child: Column(
@@ -152,19 +172,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              height: 18.0.h,
+                              height: 22.0.h,
                               width: 5.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10).r,
-                                color: colorscheme.primaryContainer,
+                                color: colorscheme.primary,
                               ),
                             ),
                             SizedBox(width: 5.w),
                             Text(
                               "Orders",
-                              style: GoogleFonts.alata(
+                              style: GoogleFonts.poppins(
                                 fontSize: 22.0.sp,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             Spacer(),
@@ -178,10 +198,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                               child: Text(
                                 "view all  ",
-                                style: GoogleFonts.alata(
+                                style: GoogleFonts.poppins(
                                   fontSize: 16.sp,
-                                  // fontWeight: FontWeight.bold,
-                                  color: AppColor.primaryBlack,
+                                  fontWeight: FontWeight.w600,
+                                  color: colorscheme.primary,
                                 ),
                               ),
                             ),
@@ -197,19 +217,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Text(
                                     "10",
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 20.sp,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w600,
                                       color: AppColor.primaryBlack,
                                     ),
                                   ),
                                   SizedBox(height: 4.h),
                                   Text(
                                     "Today Orders",
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 15.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: colorscheme.secondary,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.blackshade,
                                     ),
                                   ),
                                 ],
@@ -254,10 +274,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         SizedBox(width: 5),
                                         Text(
                                           "Accept",
-                                          style: TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 12.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: colorscheme.secondary,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColor.blackshade,
                                           ),
                                         ),
                                       ],
@@ -276,10 +296,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         SizedBox(width: 5),
                                         Text(
                                           "Reject",
-                                          style: TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 12.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: colorscheme.secondary,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColor.blackshade,
                                           ),
                                         ),
                                       ],
@@ -297,8 +317,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: 20.0.h),
                 isOnline
-                    ? Card(
-                      elevation: 1,
+                    ? Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15).r,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(255, 230, 229, 229),
+                            spreadRadius: 4,
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                          BoxShadow(
+                            color: Colors.white.withOpacity(0.6),
+                            spreadRadius: -4,
+                            blurRadius: 10,
+                            offset: Offset(0, -2),
+                          ),
+                        ],
+                      ),
+
                       child: Padding(
                         padding: const EdgeInsets.all(10.0).r,
                         child: Column(
@@ -308,19 +346,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               children: [
                                 Container(
-                                  height: 18.0.h,
+                                  height: 22.0.h,
                                   width: 5.w,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10).r,
-                                    color: colorscheme.primaryContainer,
+                                    color: colorscheme.primary,
                                   ),
                                 ),
                                 SizedBox(width: 5.w),
                                 Text(
                                   "OnGoing Order",
-                                  style: GoogleFonts.alata(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 22.0.sp,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ],
@@ -343,10 +381,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       "Chicken curry cut with skin,a pop of flavor and a hint of spice, perfect for your next meal.",
-                                      style: TextStyle(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: colorscheme.secondary,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColor.secondaryBlack,
                                       ),
                                     ),
                                   ),
@@ -354,7 +392,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SizedBox(height: 10.h),
 
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SizedBox(width: 2.0.w),
@@ -371,10 +410,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Expanded(
                                         child: Text(
                                           "JP Nagar, Bangalore, Karnataka",
-                                          style: TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 16.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: colorscheme.secondary,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColor.primaryBlackshade,
                                           ),
                                           textAlign: TextAlign.start,
                                         ),
@@ -399,10 +438,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       SizedBox(width: 10.w),
                                       Text(
                                         "Today in 30 mins",
-                                        style: TextStyle(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 16.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: colorscheme.secondary,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColor.primaryBlackshade,
                                         ),
                                       ),
                                     ],
@@ -414,8 +453,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     )
-                    : Card(
-                      elevation: 1,
+                    : Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15).r,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(255, 230, 229, 229),
+                            spreadRadius: 4,
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                          BoxShadow(
+                            color: Colors.white.withOpacity(0.6),
+                            spreadRadius: -4,
+                            blurRadius: 10,
+                            offset: Offset(0, -2),
+                          ),
+                        ],
+                      ),
+
                       child: Padding(
                         padding: const EdgeInsets.all(10.0).r,
                         child: SizedBox(
@@ -427,20 +484,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               Row(
                                 children: [
                                   Container(
-                                    height: 18.0.h,
+                                    height: 22.0.h,
                                     width: 5.w,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10).r,
-                                      color: colorscheme.primaryContainer,
+                                      color: colorscheme.primary,
                                     ),
                                   ),
                                   SizedBox(width: 5.w),
                                   Expanded(
                                     child: Text(
                                       "No Ongoing Order",
-                                      style: GoogleFonts.alata(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 22.0.sp,
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
@@ -460,8 +517,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "Please go online to receive orders",
                                   style: TextStyle(
                                     fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: colorscheme.secondary,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColor.primaryBlackshade,
                                   ),
                                 ),
                               ),

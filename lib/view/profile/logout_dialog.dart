@@ -4,23 +4,25 @@ void showLogoutDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) {
+      final SharedPref _pref = SharedPref();
       return AlertDialog(
+        backgroundColor: Colors.white,
         insetPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
         title: Text(
           'Logout',
-          style: GoogleFonts.alata(
+          style: GoogleFonts.poppins(
             fontSize: 25.sp,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
         ),
         content: Text(
           'Are you sure you want to log out?',
-          style: GoogleFonts.alata(
+          style: GoogleFonts.poppins(
             fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
             color: AppColor.primaryBlackshade,
           ),
         ),
@@ -37,10 +39,10 @@ void showLogoutDialog(BuildContext context) {
                 icon: Icon(Icons.close_rounded, color: AppColor.textWhite),
                 label: Text(
                   'Cancel',
-                  style: GoogleFonts.alata(
+                  style: GoogleFonts.poppins(
                     color: AppColor.textWhite,
                     fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -55,7 +57,10 @@ void showLogoutDialog(BuildContext context) {
                 ),
               ),
               ElevatedButton.icon(
-                onPressed: () {
+                onPressed: () async {
+                  await _pref.clearAccessToken();
+                  await _pref.clearRefreshToken();
+
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     RoutesName.loginscreen,
@@ -65,10 +70,10 @@ void showLogoutDialog(BuildContext context) {
                 icon: Icon(Icons.logout, color: AppColor.primaryBlack),
                 label: Text(
                   'Logout',
-                  style: GoogleFonts.alata(
+                  style: GoogleFonts.poppins(
                     color: AppColor.primaryBlack,
                     fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(

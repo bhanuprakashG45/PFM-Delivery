@@ -1,246 +1,263 @@
+import 'dart:async';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
 class OtpScreen extends StatefulWidget {
-  final String phonenumber;
-  const OtpScreen({super.key, required this.phonenumber});
+  final String phoneNumber;
+  const OtpScreen({super.key, required this.phoneNumber});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  late List<TextEditingController> otpControllers;
+  final List<TextEditingController> _otpControllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
+
+  int _resendAfter = 30;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    otpControllers = List.generate(6, (_) => TextEditingController());
+    _startResendTimer();
   }
+
+  void _startResendTimer() {
+    _timer?.cancel();
+    _resendAfter = 30;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_resendAfter == 0) {
+        timer.cancel();
+      } else {
+        setState(() => _resendAfter--);
+      }
+    });
+  }
+
+  bool get _isOtpComplete =>
+      _otpControllers.every((controller) => controller.text.trim().isNotEmpty);
 
   @override
   void dispose() {
-    for (var controller in otpControllers) {
-      controller.dispose();
+    for (var c in _otpControllers) {
+      c.dispose();
     }
+    _timer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return Stack(
-      children: [
-        Scaffold(
-          extendBodyBehindAppBar: true,
-          resizeToAvoidBottomInset: true,
-          backgroundColor: colorScheme.primary,
-          body: Stack(
-            children: [
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 400.h,
-                child: Container(
-                  decoration: BoxDecoration(color: colorScheme.primary),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 150.h),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Verification",
-                        style: TextStyle(
-                          fontSize: 35.sp,
-                          fontWeight: FontWeight.w700,
-                          color: colorScheme.onPrimary,
-                        ),
-                      ),
-                      SizedBox(height: 5.h),
-                      Center(
-                        child: Text(
-                          "We have sent a code to your Mobile Number",
-                          style: GoogleFonts.alata(
-                            fontSize: 16.sp,
-                            color: colorScheme.onPrimary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 80.h),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.r),
-                          topRight: Radius.circular(30.r),
-                        ),
-                      ),
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 25.w,
-                            vertical: 40.h,
-                          ),
-                          child: Consumer<LoginViewModel>(
-                            builder: (context, loginprovider, child) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "Enter OTP",
-                                            style: TextStyle(
-                                              color: colorScheme.secondary,
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          OtpTimerButton(
-                                            onPressed: () async {},
-                                            backgroundColor:
-                                                colorScheme.onPrimary,
-                                            text: Text(
-                                              "Resend otp",
-                                              style: TextStyle(
-                                                color: colorScheme.tertiary,
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            duration: 30,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 30.h),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: colorScheme.primaryContainer,
-                                          borderRadius:
-                                              BorderRadius.circular(15).r,
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: List<Widget>.generate(
-                                                6,
-                                                (index) {
-                                                  return _textFieldOTP(
-                                                    first: index == 0,
-                                                    last: index == 5,
-                                                    isLoading:
-                                                        loginprovider
-                                                            .isVerifying,
-                                                    controller:
-                                                        otpControllers[index],
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 40.h),
-                                  AppTextButton(
-                                    text: "VERIFY",
-                                    isLoading: loginprovider.isVerifying,
-                                    onTap: () async {
-                                      Navigator.pushNamed(
-                                        context,
-                                        RoutesName.bottomnavbar,
-                                        arguments: PageController(
-                                          initialPage: 0,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        toolbarHeight: 30.h,
+      ),
+
+      body: SafeArea(
+        child: Consumer<LoginViewModel>(
+          builder: (context, loginprovider, child) {
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: Image.asset(
+                      'assets/images/bg.jpg',
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.h, bottom: 20.h),
+                        child: GestureDetector(
+                          onTap: () => Navigator.of(context).pop(),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: AppColor.primaryBlack,
+                          ),
+                        ),
+                      ),
+
+                      Text(
+                        " Verify via OTP",
+                        style: GoogleFonts.openSans(
+                          fontSize: 22.sp,
+                          color: AppColor.primaryBlackshade,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        " Enter the OTP sent to you on ${widget.phoneNumber}",
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color: AppColor.secondaryBlack,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 15.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(4, (index) => _otpBox(index)),
+                      ),
+                      SizedBox(height: 24.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Didn't receive the OTP?",
+                              style: TextStyle(
+                                color: AppColor.secondaryBlack,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              _resendAfter > 0
+                                  ? "Resend in: $_resendAfter"
+                                  : "Resend OTP",
+                              style: TextStyle(
+                                color: AppColor.secondaryBlack,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+
+                      Center(
+                        child: Column(
+                          children: [
+                            Text.rich(
+                              TextSpan(
+                                text: "By signing in you agree to our ",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.primaryBlackshade,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: "terms and conditions",
+                                    style: TextStyle(
+                                      color: colorScheme.primary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 15.h),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 50.h,
+                              child: ElevatedButton(
+                                onPressed: _isOtpComplete ? _verifyOtp : null,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      _isOtpComplete
+                                          ? colorScheme.primary
+                                          : colorScheme.tertiary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                child:
+                                    loginprovider.isVerifying
+                                        ? SizedBox(
+                                          height: 20.h,
+                                          width: 20.w,
+                                          child: CircularProgressIndicator(
+                                            color: colorScheme.onPrimary,
+                                            strokeWidth: 2.0.w,
+                                          ),
+                                        )
+                                        : Text(
+                                          "Continue",
+                                          style: TextStyle(
+                                            color:
+                                                _isOtpComplete
+                                                    ? colorScheme.onPrimary
+                                                    : AppColor.primaryBlack,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
-      ],
+      ),
     );
   }
 
-  Widget _textFieldOTP({
-    required bool first,
-    required bool last,
-    required bool isLoading,
-    required TextEditingController controller,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
+  Widget _otpBox(int index) {
+    final colorscheme = Theme.of(context).colorScheme;
 
     return SizedBox(
-      width: 50.w,
-      height: 50.h,
-      child: AspectRatio(
-        aspectRatio: 1.0,
-        child: TextField(
-          controller: controller,
-          autofocus: true,
-          onChanged: (value) {
-            if (value.length == 1 && !last) {
-              FocusScope.of(context).nextFocus();
-            }
-            if (value.isEmpty && !first) {
-              FocusScope.of(context).previousFocus();
-            }
-          },
-          showCursor: false,
-          readOnly: isLoading,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-          keyboardType: TextInputType.number,
-          maxLength: 1,
-          decoration: InputDecoration(
-            counter: const Offstage(),
-            filled: true,
-            fillColor: colorScheme.onPrimary,
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: 2, color: Colors.transparent),
-              borderRadius: BorderRadius.circular(15.r),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: colorScheme.primary),
-              borderRadius: BorderRadius.circular(12).r,
-            ),
+      width: 55.w,
+      child: TextField(
+        cursorColor: AppColor.primaryBlack,
+        controller: _otpControllers[index],
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
+        maxLength: 1,
+        onChanged: (val) {
+          if (val.isNotEmpty && index < 3) {
+            FocusScope.of(context).nextFocus();
+          }
+          if (val.isEmpty && index > 0) {
+            FocusScope.of(context).previousFocus();
+          }
+        },
+        style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+        decoration: InputDecoration(
+          counterText: '',
+
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: colorscheme.tertiary, width: 2),
+            borderRadius: BorderRadius.circular(1).r,
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColor.primaryBlack, width: 2),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _verifyOtp() async {
+    final otp = _otpControllers.map((c) => c.text).join();
+    debugPrint("Entered OTP: $otp");
+    final authvm = Provider.of<LoginViewModel>(context, listen: false);
+    await authvm.verifyOtp(context, otp, widget.phoneNumber);
   }
 }

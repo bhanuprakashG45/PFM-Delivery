@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:priya_freshmeats_delivery/res/constants/color.dart';
-// import 'package:priya_freshmeats_delivery/res/constants/theme.dart';
 
 class AppTextButton extends StatelessWidget {
   final String text;
@@ -23,7 +22,6 @@ class AppTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = MaterialTheme(Theme.of(context).textTheme);
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(buttoncolor),

@@ -1,5 +1,7 @@
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 import 'package:priya_freshmeats_delivery/view/orders/notdelivered_screen.dart';
+import 'package:priya_freshmeats_delivery/view/profile/privacy_policy_screen.dart';
+import 'package:priya_freshmeats_delivery/view/profile/terms_and_conditions_screen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -16,7 +18,7 @@ class Routes {
         final phoneNumber = settings.arguments as String;
         return MaterialPageRoute(
           builder:
-              (BuildContext context) => OtpScreen(phonenumber: phoneNumber),
+              (BuildContext context) => OtpScreen(phoneNumber: phoneNumber),
         );
       case RoutesName.homescreen:
         return MaterialPageRoute(
@@ -31,16 +33,20 @@ class Routes {
           builder: (BuildContext context) => const NotificationScreen(),
         );
       case RoutesName.orderdetailsscreen:
+        final orderId = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (BuildContext context) => OrderDetailsScreen(),
+          builder:
+              (BuildContext context) => OrderDetailsScreen(orderId: orderId),
         );
       case RoutesName.bottomnavbar:
         return MaterialPageRoute(
           builder: (BuildContext context) => BottomNavBar(initialIndex: 0),
         );
       case RoutesName.orderaddressscreen:
+        final orderId = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (BuildContext context) => const OrderAddressScreen(),
+          builder:
+              (BuildContext context) => OrderAddressScreen(orderId: orderId),
         );
       case RoutesName.viewallordersscreen:
         return MaterialPageRoute(
@@ -52,11 +58,21 @@ class Routes {
         );
       case RoutesName.mydocumentsscreen:
         return MaterialPageRoute(
-          builder: (BuildContext context) => MydocumentsScreen(),
+          builder: (BuildContext context) => const MydocumentsScreen(),
         );
       case RoutesName.notDeliveredScreen:
+        final orderId = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (BuildContext context) =>const NotDeliveredScreen(),
+          builder:
+              (BuildContext context) => NotDeliveredScreen(orderId: orderId),
+        );
+      case RoutesName.termsandconditions:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const TermsAndConditionsScreen(),
+        );
+      case RoutesName.privacypolicyscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const PrivacyPolicyScreen(),
         );
 
       default:

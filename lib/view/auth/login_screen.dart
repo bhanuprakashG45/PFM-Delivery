@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,157 +8,209 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  bool isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _phoneController.addListener(() {
+      setState(() {
+        isButtonEnabled = _phoneController.text.length == 10;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final colorscheme = Theme.of(context).colorScheme;
+    double screenheight = MediaQuery.of(context).size.height;
+    // final loginprovider = Provider.of<LoginViewModel>(context, listen: false);
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/loginbg.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [colorScheme.shadow, Color(0xB3D32F2F)],
-            ),
-          ),
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      'Welcome Back',
-                      style: TextStyle(
-                        color: colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40.sp,
-                      ),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        top: false,
+        child: Consumer<LoginViewModel>(
+          builder: (context, loginprovider, child) {
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: Image.asset(
+                      'assets/images/bg.jpg',
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: 8.h),
-                  Center(
-                    child: Text(
-                      'Sign in to continue',
-                      style: GoogleFonts.alata(
-                        color: colorScheme.onPrimary,
-                        fontSize: 18.sp,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 30.h),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16).r,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-                      child: Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16).r,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10.h),
+                      Center(
+                        child: Image.asset(
+                          "assets/images/loginimage.png",
+                          height: screenheight * 0.25,
                         ),
-                        color: Color(0x33FFB3B3),
-
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.symmetric(
-                                vertical: 25,
-                                horizontal: 20,
-                              ).r,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Enter Phone Number",
-                                style: GoogleFonts.alata(
-                                  letterSpacing: 1,
-                                  color: colorScheme.onPrimary,
-                                  // fontWeight: FontWeight.bold,
-                                  fontSize: 18.sp,
-                                ),
+                      ),
+                      Center(
+                        child: Text(
+                          'Login with your mobile number',
+                          style: GoogleFonts.alata(
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12.r),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10,
+                              spreadRadius: 2,
+                              offset: Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              '+91',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
                               ),
-                              SizedBox(height: 10.h),
-                              TextField(
-                                controller: phoneController,
-                                decoration: InputDecoration(
-                                  hintText: 'Phone',
-                                  hintStyle: GoogleFonts.alata(
-                                    color: colorScheme.onSurface,
-                                    fontSize: 15.sp,
-                                  ),
-
-                                  prefixIcon: Icon(
-                                    Icons.phone,
-                                    color: colorScheme.primary,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: colorScheme.outline,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: colorScheme.outline,
-                                    ),
-                                  ),
-
-                                  filled: true,
-                                  fillColor: colorScheme.primaryContainer,
-                                ),
+                            ),
+                            SizedBox(width: 10.w),
+                            Container(
+                              height: 24.h,
+                              width: 1,
+                              color: Colors.grey.shade400,
+                            ),
+                            SizedBox(width: 10.w),
+                            Expanded(
+                              child: TextField(
+                                controller: _phoneController,
                                 keyboardType: TextInputType.phone,
-                              ),
-                              SizedBox(height: 16.h),
-
-                              SizedBox(height: 20.h),
-
-                              Center(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      RoutesName.otpscreen,
-                                      arguments: phoneController.text.trim(),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(60.w, 50.h),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    backgroundColor: colorScheme.primary,
-                                    foregroundColor: colorScheme.onPrimary,
-                                    elevation: 4,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(10),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                decoration: InputDecoration(
+                                  hintText: 'Enter Mobile Number',
+                                  border: InputBorder.none,
+                                  hintStyle: GoogleFonts.poppins(
+                                    color: AppColor.secondaryBlack,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  child: Text(
-                                    'Send OTP',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 50.h,
+                        child: ElevatedButton(
+                          onPressed:
+                              isButtonEnabled
+                                  ? () async {
+                                    final phoneNumber = _phoneController.text;
+                                    await loginprovider.userLogin(
+                                      context,
+                                      phoneNumber,
+                                    );
+                                  }
+                                  : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                isButtonEnabled
+                                    ? colorscheme.primary
+                                    : Colors.grey.shade400,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            elevation: 0,
+                          ),
+                          child:
+                              loginprovider.isLoading
+                                  ? SizedBox(
+                                    height: 20.h,
+                                    width: 20.w,
+                                    child: CircularProgressIndicator(
+                                      color: colorscheme.onPrimary,
+                                      strokeWidth: 2.0.w,
+                                    ),
+                                  )
+                                  : Text(
+                                    'Get OTP',
                                     style: GoogleFonts.alata(
                                       fontSize: 18.sp,
+                                      color: colorscheme.onPrimary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      Center(
+                        child: RichText(
+                          textAlign: TextAlign.justify,
+                          text: TextSpan(
+                            text: 'By logging in, you agree to our ',
+                            style: TextStyle(
+                              color: AppColor.primaryBlack,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Terms & Conditions',
+                                style: TextStyle(
+                                  color: colorscheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' and ',
+                                style: TextStyle(color: AppColor.primaryBlack),
+                              ),
+                              TextSpan(
+                                text: 'Privacy Policy',
+                                style: TextStyle(
+                                  color: colorscheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                    ),
+                      SizedBox(height: 10.h),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

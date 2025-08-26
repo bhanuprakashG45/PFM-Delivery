@@ -17,14 +17,16 @@ class _ViewallOrdersScreenState extends State<ViewallOrdersScreen> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: colorscheme.onPrimary,
       appBar: AppBar(
         title: Text(
           'All Orders',
-          style: GoogleFonts.alata(
-            fontSize: 25.0.sp,
-            fontWeight: FontWeight.w500,
+          style: GoogleFonts.poppins(
+            fontSize: 22.0.sp,
+            fontWeight: FontWeight.w600,
           ),
         ),
+        backgroundColor: colorscheme.onPrimary,
         centerTitle: true,
         automaticallyImplyLeading: true,
         bottom: PreferredSize(
@@ -47,8 +49,8 @@ class _ViewallOrdersScreenState extends State<ViewallOrdersScreen> {
                 height: 45.h,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: colorscheme.secondaryContainer,
-                    width: 0.5,
+                    color: AppColor.primaryBlackshade,
+                    width: 0.2,
                   ),
                   borderRadius: BorderRadius.circular(15).r,
                 ),
@@ -78,11 +80,11 @@ class _ViewallOrdersScreenState extends State<ViewallOrdersScreen> {
                           child: Center(
                             child: Text(
                               "Accepted",
-                              style: GoogleFonts.alata(
+                              style: GoogleFonts.poppins(
                                 fontSize: 18.0.sp,
                                 color:
                                     isAccepted ? Colors.white : Colors.black87,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -91,11 +93,11 @@ class _ViewallOrdersScreenState extends State<ViewallOrdersScreen> {
                           child: Center(
                             child: Text(
                               "Rejected",
-                              style: GoogleFonts.alata(
+                              style: GoogleFonts.poppins(
                                 fontSize: 18.0.sp,
                                 color:
                                     !isAccepted ? Colors.white : Colors.black87,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -133,7 +135,27 @@ class AcceptedOrdersTab extends StatelessWidget {
         return Padding(
           padding:
               const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0).r,
-          child: Card(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 230, 229, 229),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+                BoxShadow(
+                  color: Colors.white.withOpacity(0.6),
+                  spreadRadius: -4,
+                  blurRadius: 10,
+                  offset: Offset(0, -2),
+                ),
+              ],
+
+              borderRadius: BorderRadius.circular(25).r,
+            ),
+
             child: ListTile(
               leading: Image.asset(
                 "assets/images/accept.png",
@@ -143,14 +165,17 @@ class AcceptedOrdersTab extends StatelessWidget {
               ),
               title: Text(
                 'Accepted Order #A0${index + 1}',
-                style: GoogleFonts.alata(
-                  fontSize: 20.0.sp,
-                  fontWeight: FontWeight.w500,
+                style: GoogleFonts.poppins(
+                  fontSize: 18.0.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               subtitle: Text(
                 'Delivered : Aug 5 2025 at 6:30 PM',
-                style: GoogleFonts.alata(fontSize: 16.0.sp),
+                style: GoogleFonts.poppins(
+                  fontSize: 15.0.sp,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
@@ -171,7 +196,27 @@ class RejectedOrdersTab extends StatelessWidget {
         return Padding(
           padding:
               const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0).r,
-          child: Card(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 230, 229, 229),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+                BoxShadow(
+                  color: Colors.white.withOpacity(0.6),
+                  spreadRadius: -4,
+                  blurRadius: 10,
+                  offset: Offset(0, -2),
+                ),
+              ],
+
+              borderRadius: BorderRadius.circular(25).r,
+            ),
+
             child: ListTile(
               leading: Image.asset(
                 "assets/images/rejectorder.png",
@@ -181,14 +226,18 @@ class RejectedOrdersTab extends StatelessWidget {
               ),
               title: Text(
                 'Rejected Order #R0${index + 1}',
-                style: GoogleFonts.alata(
-                  fontSize: 20.0.sp,
-                  fontWeight: FontWeight.w500,
+                style: GoogleFonts.poppins(
+                  fontSize: 18.0.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               subtitle: Text(
                 'Rejected on: 07 Aug 2025',
-                style: GoogleFonts.alata(fontSize: 16.0.sp),
+                style: GoogleFonts.poppins(
+                  fontSize: 15.0.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.secondaryBlack,
+                ),
               ),
             ),
           ),

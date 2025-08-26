@@ -40,7 +40,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
             kBottomNavigationBarHeight +
             MediaQuery.of(context).padding.bottom,
         decoration: BoxDecoration(
-          color: colorScheme.surface,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)).r,
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
@@ -73,18 +74,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         color:
                             isSelected
                                 ? colorScheme.primary
-                                : colorScheme.secondary,
+                                : Color(0xFF7D7C7C),
                       ),
                       Text(
                         labels[i],
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: isSelected ? 13.sp : 12.sp,
                           fontWeight:
                               isSelected ? FontWeight.bold : FontWeight.w600,
                           color:
                               isSelected
                                   ? colorScheme.primary
-                                  : colorScheme.secondary,
+                                  : Color(0xFF7D7C7C),
                         ),
                       ),
                     ],
