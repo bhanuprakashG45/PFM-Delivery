@@ -1,4 +1,5 @@
 import 'package:priya_freshmeats_delivery/data/repository/auth_rep/login_repository.dart';
+import 'package:priya_freshmeats_delivery/res/components/toast_helper.dart';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
 class LoginViewModel with ChangeNotifier {
@@ -20,7 +21,7 @@ class LoginViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> userLogin(BuildContext context, String phone) async {
+  Future<bool> userLogin(BuildContext context, String phone) async {
     isLoading = true;
     try {
       final result = await _loginRepository.userLogin(phone);
@@ -31,8 +32,10 @@ class LoginViewModel with ChangeNotifier {
         await _sharedpref.storeUserId(userId);
         notifyListeners();
         Navigator.pushNamed(context, RoutesName.otpscreen, arguments: phone);
+        return true;
       } else {
         debugPrint(result.message);
+        return false;
       }
     } catch (e) {
       if (e is AppException) {
@@ -40,6 +43,7 @@ class LoginViewModel with ChangeNotifier {
       } else {
         debugPrint("Response body: $e");
       }
+      return false;
     } finally {
       isLoading = false;
       notifyListeners();
@@ -52,10 +56,17 @@ class LoginViewModel with ChangeNotifier {
       final userId = await _sharedpref.getUserId();
       debugPrint(userId);
       final result = await _loginRepository.verifyOtp(otp, phone, userId!);
-      if (result.success == true) {
+      if (result.success) {
         final userData = result.data;
 
         await _sharedpref.storeUserData(userData);
+        if (context.mounted) {
+          ToastMessage.showToast(
+            context,
+            message: "User Verified Successfully",
+            icon: Icon(Icons.check, color: Colors.green),
+          );
+        }
         Navigator.pushNamedAndRemoveUntil(
           context,
           RoutesName.bottomnavbar,

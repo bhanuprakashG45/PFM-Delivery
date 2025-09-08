@@ -145,27 +145,27 @@ class _OtpScreenState extends State<OtpScreen> {
                       Center(
                         child: Column(
                           children: [
-                            Text.rich(
-                              TextSpan(
-                                text: "By signing in you agree to our ",
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColor.primaryBlackshade,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: "terms and conditions",
-                                    style: TextStyle(
-                                      color: colorScheme.primary,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 15.h),
+                            // Text.rich(
+                            //   TextSpan(
+                            //     text: "By signing in you agree to our ",
+                            //     style: TextStyle(
+                            //       fontSize: 12.sp,
+                            //       fontWeight: FontWeight.bold,
+                            //       color: AppColor.primaryBlackshade,
+                            //     ),
+                            //     children: [
+                            //       TextSpan(
+                            //         text: "terms and conditions",
+                            //         style: TextStyle(
+                            //           color: colorScheme.primary,
+                            //           fontWeight: FontWeight.bold,
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            //   textAlign: TextAlign.center,
+                            // ),
+                            // SizedBox(height: 15.h),
                             SizedBox(
                               width: double.infinity,
                               height: 50.h,

@@ -1,4 +1,4 @@
-package com.example.priya_freshmeats_delivery
+package com.pfmdelivery.app
 
 import io.flutter.embedding.android.FlutterActivity
 

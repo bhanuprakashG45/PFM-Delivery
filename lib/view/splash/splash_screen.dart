@@ -1,4 +1,5 @@
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
+import 'package:priya_freshmeats_delivery/view_model/profile_vm/profile_viewmodel.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,6 +13,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((value) async {
+      final profileProvider = Provider.of<ProfileViewmodel>(
+        context,
+        listen: false,
+      );
+      profileProvider.fetchProfileDetails();
+    });
     _navigateAfterDelay();
   }
 

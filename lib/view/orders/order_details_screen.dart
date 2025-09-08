@@ -1,4 +1,5 @@
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
+import 'package:priya_freshmeats_delivery/view_model/home_vm/home_viewmodel.dart';
 import 'package:priya_freshmeats_delivery/view_model/orders_vm/orders_viewmodel.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -44,8 +45,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       body: SafeArea(
         top: false,
         child: SingleChildScrollView(
-          child: Consumer<OrdersViewmodel>(
-            builder: (context, orderdetailsprovider, child) {
+          child: Consumer2<OrdersViewmodel, HomeViewmodel>(
+            builder: (context, orderdetailsprovider, homeprovider, child) {
               final orderdata = orderdetailsprovider.orderData;
               return Skeletonizer(
                 enabled: orderdetailsprovider.isOrderDetailsLoading,
@@ -192,6 +193,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   context,
                                                   widget.orderId,
                                                 );
+                                            await homeprovider
+                                                .fetchOrderStats();
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Color(0xFF93DA97),
@@ -244,6 +247,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   context,
                                                   widget.orderId,
                                                 );
+                                            await homeprovider
+                                                .fetchOrderStats();
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:

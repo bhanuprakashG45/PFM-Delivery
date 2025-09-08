@@ -1,11 +1,25 @@
+import 'package:priya_freshmeats_delivery/data/models/orders/accepted_orders_model.dart';
+import 'package:priya_freshmeats_delivery/data/models/orders/completed_orders_model.dart';
+import 'package:priya_freshmeats_delivery/data/models/orders/ongoing_order_model.dart';
 import 'package:priya_freshmeats_delivery/data/models/orders/order_accept_model.dart';
 import 'package:priya_freshmeats_delivery/data/models/orders/order_details_model.dart';
+import 'package:priya_freshmeats_delivery/data/models/orders/rejected_orders_model.dart';
 import 'package:priya_freshmeats_delivery/data/repository/orders_rep/orders_repository.dart';
 import 'package:priya_freshmeats_delivery/res/components/toast_helper.dart';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
 class OrdersViewmodel with ChangeNotifier {
   final OrdersRepository _repository = OrdersRepository();
+
+  bool _isAccepted = true;
+
+  bool get isAccepted => _isAccepted;
+
+  void toggleAccepted(bool value) {
+    _isAccepted = value;
+    notifyListeners();
+  }
+
   OrderData _orderData = OrderData(
     id: "",
     orderId: "",
@@ -79,6 +93,58 @@ class OrdersViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
+  List<OnGoingOrderData> _ongoingOrderDetail = [];
+  List<OnGoingOrderData> get ongoingOrderDetail => _ongoingOrderDetail;
+  bool _ongoingOrderLoading = false;
+  bool get ongoingOrderLoading => _ongoingOrderLoading;
+
+  set ongoingOrderLoading(bool value) {
+    _ongoingOrderLoading = value;
+    notifyListeners();
+  }
+
+  List<CompletedOrder> _oncompletedOrderData = [];
+  List<CompletedOrder> get oncompletedOrderData => _oncompletedOrderData;
+  bool _oncompletedOrderLoading = false;
+  bool get oncompletedOrderLoading => _oncompletedOrderLoading;
+
+  set oncompletedOrderLoading(bool value) {
+    _oncompletedOrderLoading = value;
+    notifyListeners();
+  }
+
+  AcceptedOrder _acceptedOrderData = AcceptedOrder(
+    orders: [],
+    pagination: AcceptedOrderPagination(),
+  );
+  AcceptedOrder get acceptedOrderData => _acceptedOrderData;
+  bool _acceptedOrderLoading = false;
+  bool get acceptedOrderLoading => _acceptedOrderLoading;
+
+  set acceptedOrderLoading(bool value) {
+    _acceptedOrderLoading = value;
+    notifyListeners();
+  }
+
+  RejectedOrder _rejectedOrderData = RejectedOrder(
+    orders: [],
+    pagination: RejectedOrderPagination(
+      currentPage: 0,
+      totalPages: 0,
+      totalOrders: 0,
+      hasNext: false,
+      hasPrev: false,
+    ),
+  );
+  RejectedOrder get rejectedOrderData => _rejectedOrderData;
+  bool _rejectedOrderDataLoading = false;
+  bool get rejectedOrderDataLoading => _rejectedOrderDataLoading;
+
+  set rejectedOrderDataLoading(bool value) {
+    _rejectedOrderDataLoading = value;
+    notifyListeners();
+  }
+
   Future<void> fetchOrderDetails(BuildContext context, String orderId) async {
     isOrderDetailsLoading = true;
     try {
@@ -114,9 +180,10 @@ class OrdersViewmodel with ChangeNotifier {
         notifyListeners();
       } else {
         debugPrint("Entered into Else Block of accept order");
-        ToastHelper.showSuccess(
-          context: context,
+        ToastMessage.showToast(
+          context,
           message: "Order Out for Delivery",
+          icon: Icon(Icons.check, color: Colors.green),
         );
         debugPrint(result.statusCode.toString());
       }
@@ -137,9 +204,10 @@ class OrdersViewmodel with ChangeNotifier {
         Navigator.pop(context);
         notifyListeners();
       } else {
-        ToastHelper.showError(
-          context: context,
+        ToastMessage.showToast(
+          context,
           message: "Order Out for Delivery",
+          icon: Icon(Icons.check, color: Colors.green),
         );
         debugPrint(result.statusCode.toString());
       }
@@ -202,6 +270,74 @@ class OrdersViewmodel with ChangeNotifier {
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  Future<void> fetchOnGoingOrder() async {
+    ongoingOrderLoading = true;
+    try {
+      final result = await _repository.fetchOngoingOrders();
+      if (result.success) {
+        _ongoingOrderDetail = result.data;
+        debugPrint("Fetched Ongoing Orders Successfully");
+      } else {
+        debugPrint(result.message);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      ongoingOrderLoading = false;
+    }
+  }
+
+  Future<void> fetchCompletedOrders() async {
+    oncompletedOrderLoading = true;
+    try {
+      final result = await _repository.fetchCompletedOrders();
+      if (result.success) {
+        _oncompletedOrderData = result.data;
+        debugPrint("Fetched Completed Orders Successfully");
+      } else {
+        debugPrint(result.message);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      oncompletedOrderLoading = false;
+    }
+  }
+
+  Future<void> fetchAcceptedOrders() async {
+    acceptedOrderLoading = true;
+    try {
+      final response = await _repository.fetchAcceptedOrders();
+      if (response.success) {
+        _acceptedOrderData = response.data;
+        debugPrint(response.message);
+      } else {
+        debugPrint(response.message);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      acceptedOrderLoading = false;
+    }
+  }
+
+  Future<void> fetchRejectedOrders() async {
+    rejectedOrderDataLoading = true;
+    try {
+      final response = await _repository.fetchRejectedOrders();
+      if (response.success) {
+        _rejectedOrderData = response.data;
+        debugPrint(response.message);
+      } else {
+        debugPrint(response.message);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      rejectedOrderDataLoading = false;
     }
   }
 }

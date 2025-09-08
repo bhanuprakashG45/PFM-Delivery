@@ -97,8 +97,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 _buildSectionTitle("10. Contact Us"),
                 _buildBulletList([
                   "If you have questions about this policy, contact us at:",
-                  "Phone: [Insert Number]",
-                  "Email: [Insert Email Address]",
+                  "Phone: +91 9845052666",
+                  "Email: priyafreshmeats@gmail.com",
                 ]),
 
                 SizedBox(height: 20.h),

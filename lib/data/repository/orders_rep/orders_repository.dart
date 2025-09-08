@@ -1,9 +1,13 @@
 import 'package:priya_freshmeats_delivery/core/network/network_api_services.dart';
+import 'package:priya_freshmeats_delivery/data/models/orders/accepted_orders_model.dart';
+import 'package:priya_freshmeats_delivery/data/models/orders/completed_orders_model.dart';
 import 'package:priya_freshmeats_delivery/data/models/orders/initiate_delivery_model.dart';
 import 'package:priya_freshmeats_delivery/data/models/orders/not_delivered_model.dart';
+import 'package:priya_freshmeats_delivery/data/models/orders/ongoing_order_model.dart';
 import 'package:priya_freshmeats_delivery/data/models/orders/order_accept_model.dart';
 import 'package:priya_freshmeats_delivery/data/models/orders/order_delivered_model.dart';
 import 'package:priya_freshmeats_delivery/data/models/orders/order_details_model.dart';
+import 'package:priya_freshmeats_delivery/data/models/orders/rejected_orders_model.dart';
 import 'package:priya_freshmeats_delivery/res/constants/app_urls.dart';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
@@ -99,6 +103,62 @@ class OrdersRepository {
       throw e;
     } catch (e) {
       debugPrint("Unexpected error in Not Delivered: $e");
+      rethrow;
+    }
+  }
+
+  Future<AcceptedOrderModel> fetchAcceptedOrders() async {
+    try {
+      final url = AppUrls.acceptedOrdersUrl;
+      final response = await _apiServices.getApiResponse(url);
+
+      return AcceptedOrderModel.fromJson(response);
+    } on AppException catch (e) {
+      throw e;
+    } catch (e) {
+      debugPrint("Error Fetching Accepted Orders : $e");
+      rethrow;
+    }
+  }
+
+  Future<RejectedOrderModel> fetchRejectedOrders() async {
+    try {
+      final url = AppUrls.rejectedOrdersUrl;
+      final response = await _apiServices.getApiResponse(url);
+
+      return RejectedOrderModel.fromJson(response);
+    } on AppException catch (e) {
+      throw e;
+    } catch (e) {
+      debugPrint("Error Fetching REjected Orders : $e");
+      rethrow;
+    }
+  }
+
+  Future<OnGoingOrderModel> fetchOngoingOrders() async {
+    try {
+      final url = AppUrls.ongoingOrdersUrl;
+      final response = await _apiServices.getApiResponse(url);
+
+      return OnGoingOrderModel.fromJson(response);
+    } on AppException catch (e) {
+      throw e;
+    } catch (e) {
+      debugPrint("Error Fetching Ongoing Orders : $e");
+      rethrow;
+    }
+  }
+
+  Future<CompletedOrderModel> fetchCompletedOrders() async {
+    try {
+      final url = AppUrls.completedOrdersUrl;
+      final response = await _apiServices.getApiResponse(url);
+
+      return CompletedOrderModel.fromJson(response);
+    } on AppException catch (e) {
+      throw e;
+    } catch (e) {
+      debugPrint("Error Fetching Completed Orders : $e");
       rethrow;
     }
   }

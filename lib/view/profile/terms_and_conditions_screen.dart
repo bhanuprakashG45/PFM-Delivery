@@ -112,8 +112,8 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                 _buildSectionTitle("11. Contact"),
                 _buildBulletList([
                   "Support:",
-                  "Phone: [Insert Number]",
-                  "Email: [Insert Email Address]",
+                  "Phone: + 91 9686068687",
+                  "Email: priyafreshmeats@gmail.com",
                 ]),
 
                 SizedBox(height: 20.h),

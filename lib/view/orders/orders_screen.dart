@@ -1,4 +1,7 @@
+import 'package:intl/intl.dart';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
+import 'package:priya_freshmeats_delivery/view_model/orders_vm/orders_viewmodel.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -12,13 +15,23 @@ class _OrdersScreenState extends State<OrdersScreen> {
   final PageController _pageController = PageController();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((value) async {
+      final provider = Provider.of<OrdersViewmodel>(context, listen: false);
+      await provider.fetchOnGoingOrder();
+      await provider.fetchCompletedOrders();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          ' My Orders',
+          'My Orders',
           style: TextStyle(fontSize: 22.0.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -74,7 +87,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               "OnGoing",
                               style: GoogleFonts.poppins(
                                 fontSize: 18.0.sp,
-
                                 color:
                                     isOngoing ? Colors.white : Colors.black87,
                                 fontWeight: FontWeight.w600,
@@ -124,62 +136,71 @@ class OnGoingOrdersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorscheme = Theme.of(context).colorScheme;
-    return ListView.builder(
-      itemCount: 1,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 10).r,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: const Color.fromARGB(255, 230, 229, 229),
-                  spreadRadius: 4,
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
-                ),
-                BoxShadow(
-                  color: Colors.white.withOpacity(0.6),
-                  spreadRadius: -4,
-                  blurRadius: 10,
-                  offset: Offset(0, -2),
-                ),
-              ],
 
-              borderRadius: BorderRadius.circular(25).r,
+    return Consumer<OrdersViewmodel>(
+      builder: (context, provider, child) {
+        if (provider.ongoingOrderDetail.isEmpty) {
+          return Center(
+            child: Text(
+              "No OnGoing Orders",
+              style: GoogleFonts.poppins(fontSize: 16.sp),
             ),
+          );
+        }
+        final onGoingOrders = provider.ongoingOrderDetail[0].orderDetails;
+        debugPrint(onGoingOrders.length.toString());
 
-            child: ListTile(
-              leading: FaIcon(
-                FontAwesomeIcons.motorcycle,
-                color: colorscheme.primary,
-              ),
-              title: Text(
-                'Order #00${index + 1}',
-                style: GoogleFonts.poppins(
-                  color: AppColor.primaryBlack,
-                  fontSize: 18.0.sp,
-                  fontWeight: FontWeight.w600,
+        return Skeletonizer(
+          enabled: provider.ongoingOrderLoading,
+          child: ListView.builder(
+            itemCount: onGoingOrders.length,
+            itemBuilder: (context, index) {
+              final order = onGoingOrders[index];
+              return Padding(
+                padding: const EdgeInsets.all(10).r,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 230, 229, 229),
+                        spreadRadius: 4,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.6),
+                        spreadRadius: -4,
+                        blurRadius: 10,
+                        offset: Offset(0, -2),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(25).r,
+                  ),
+                  child: ListTile(
+                    leading: FaIcon(
+                      FontAwesomeIcons.motorcycle,
+                      color: colorscheme.primary,
+                    ),
+                    title: Text(
+                      'Order : ${order.name}',
+                      style: GoogleFonts.poppins(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Estimated Delivery: ${provider.ongoingOrderDetail[0].estimatedDeliveryTime != null ? DateFormat('hh:mm a').format(provider.ongoingOrderDetail[0].estimatedDeliveryTime!) : "N/A"}',
+                      style: GoogleFonts.poppins(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColor.secondaryBlack,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              subtitle: Text(
-                'Estimated Delivery: 7:00 PM',
-                style: GoogleFonts.poppins(
-                  color: AppColor.secondaryBlack,
-                  fontSize: 15.0.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              // trailing: Text(
-              //   'OnGoing',
-              //   style: GoogleFonts.alata(
-              //     fontSize: 16.0.sp,
-              //     color: Colors.amber,
-              //     fontWeight: FontWeight.w400,
-              //   ),
-              // ),
-            ),
+              );
+            },
           ),
         );
       },
@@ -192,54 +213,72 @@ class CompletedOrdersTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(10.0).r,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: const Color.fromARGB(255, 230, 229, 229),
-                  spreadRadius: 4,
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
-                ),
-                BoxShadow(
-                  color: Colors.white.withOpacity(0.6),
-                  spreadRadius: -4,
-                  blurRadius: 10,
-                  offset: Offset(0, -2),
-                ),
-              ],
-
-              borderRadius: BorderRadius.circular(25).r,
+    return Consumer<OrdersViewmodel>(
+      builder: (context, provider, child) {
+        if (provider.oncompletedOrderData.isEmpty) {
+          return Center(
+            child: Text(
+              "No Completed Orders",
+              style: GoogleFonts.poppins(fontSize: 16.sp),
             ),
+          );
+        }
+        final completedOrders = provider.oncompletedOrderData[0].orderDetails;
 
-            child: ListTile(
-              leading: Image.asset(
-                "assets/images/accept.png",
-                color: Colors.green.shade400,
-                height: 30.h,
-                width: 40.w,
-              ),
-              title: Text(
-                'Order #10${index + 1}',
-                style: GoogleFonts.poppins(
-                  fontSize: 18.0.sp,
-                  fontWeight: FontWeight.w600,
+        return Skeletonizer(
+          enabled: provider.oncompletedOrderLoading,
+          child: ListView.builder(
+            itemCount: completedOrders.length,
+            itemBuilder: (context, index) {
+              final order = completedOrders[index];
+              return Padding(
+                padding: const EdgeInsets.all(10.0).r,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 230, 229, 229),
+                        spreadRadius: 4,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.6),
+                        spreadRadius: -4,
+                        blurRadius: 10,
+                        offset: Offset(0, -2),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(25).r,
+                  ),
+                  child: ListTile(
+                    leading: Image.asset(
+                      "assets/images/accept.png",
+                      color: Colors.green.shade400,
+                      height: 30.h,
+                      width: 40.w,
+                    ),
+                    title: Text(
+                      'Order : ${order.name}',
+                      style: GoogleFonts.poppins(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Text(
+                      'Delivered on: ${DateFormat('dd MMM yyyy').format(provider.oncompletedOrderData[0].actualDeliveryTime)}',
+                      style: GoogleFonts.poppins(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              subtitle: Text(
-                'Delivered on: 05 Aug 2025',
-                style: GoogleFonts.poppins(
-                  fontSize: 15.0.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
+              );
+            },
           ),
         );
       },

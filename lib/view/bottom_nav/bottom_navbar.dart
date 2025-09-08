@@ -1,4 +1,6 @@
+import 'package:priya_freshmeats_delivery/res/components/toast_helper.dart';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
+import 'package:priya_freshmeats_delivery/view_model/home_vm/home_viewmodel.dart';
 
 class BottomNavBar extends StatefulWidget {
   final int initialIndex;
@@ -40,7 +42,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
             kBottomNavigationBarHeight +
             MediaQuery.of(context).padding.bottom,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)).r,
+          borderRadius:
+              BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ).r,
           color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -59,6 +65,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
             return Expanded(
               child: InkWell(
                 onTap: () {
+                  if (i == 1) {
+                    final provider = Provider.of<HomeViewmodel>(
+                      context,
+                      listen: false,
+                    );
+                    if (!provider.isOnline) {
+                      ToastMessage.showToast(
+                        context,
+                        message: "Go Online for Scan Order",
+                        icon: Icon(Icons.info, color: colorScheme.primary),
+                      );
+                      return;
+                    }
+                  }
+
                   setState(() {
                     currentIndex = i;
                   });

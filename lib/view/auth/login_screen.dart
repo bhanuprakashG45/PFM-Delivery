@@ -1,3 +1,5 @@
+import 'package:flutter/gestures.dart';
+import 'package:priya_freshmeats_delivery/res/components/toast_helper.dart';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,6 +12,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _phoneController = TextEditingController();
   bool isButtonEnabled = false;
+
+  Future<void> _launchUrl(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   void initState() {
@@ -31,7 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final colorscheme = Theme.of(context).colorScheme;
     double screenheight = MediaQuery.of(context).size.height;
-    // final loginprovider = Provider.of<LoginViewModel>(context, listen: false);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -132,10 +140,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               isButtonEnabled
                                   ? () async {
                                     final phoneNumber = _phoneController.text;
-                                    await loginprovider.userLogin(
+                                    bool result = await loginprovider.userLogin(
                                       context,
                                       phoneNumber,
                                     );
+                                    if (context.mounted && result == false) {
+                                      ToastMessage.showToast(
+                                        context,
+                                        message: "User not Found",
+                                        icon: Icon(
+                                          Icons.error,
+                                          color: colorscheme.primary,
+                                        ),
+                                      );
+                                    }
                                   }
                                   : null,
                           style: ElevatedButton.styleFrom(
@@ -176,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             text: 'By logging in, you agree to our ',
                             style: TextStyle(
                               color: AppColor.primaryBlack,
-                              fontSize: 12.sp,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
                             children: <TextSpan>[
@@ -187,6 +205,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,
                                 ),
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () {
+                                        _launchUrl(
+                                          "https://pfm.kods.app/delivery-partner/terms-and-condition",
+                                        );
+                                      },
                               ),
                               TextSpan(
                                 text: ' and ',
@@ -199,6 +224,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,
                                 ),
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () {
+                                        _launchUrl(
+                                          "https://pfm.kods.app/delivery-partner/privacy-policy",
+                                        );
+                                      },
                               ),
                             ],
                           ),

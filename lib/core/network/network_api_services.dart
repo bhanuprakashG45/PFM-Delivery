@@ -11,9 +11,13 @@ class NetworkApiServices extends BaseApiServices {
 
   Future<void> _refreshAccessToken() async {
     final refreshToken = await _sharedPref.getRefreshToken();
+    final token = await _sharedPref.getAccessToken();
     final response = await http.post(
       Uri.parse(AppUrls.refreshTokenUrl),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
       body: jsonEncode({'refreshToken': refreshToken}),
     );
 
@@ -191,6 +195,7 @@ class NetworkApiServices extends BaseApiServices {
       String? token = await _sharedPref.getAccessToken();
       Map<String, String> requestHeaders = {
         'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
         if (headers != null) ...headers,
       };
 
@@ -220,6 +225,7 @@ class NetworkApiServices extends BaseApiServices {
 
         return await _processResponse(response);
       } else {
+        debugPrint(data.toString());
         final response = await http.patch(
           Uri.parse(url),
           body: jsonEncode(data),
