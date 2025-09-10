@@ -63,13 +63,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 30.h),
                       Center(
                         child: Image.asset(
-                          "assets/images/loginimage.png",
-                          height: screenheight * 0.25,
+                          "assets/images/splashfinal.png",
+                          height: screenheight * 0.2,
                         ),
                       ),
+                      SizedBox(height: 10.h),
                       Center(
                         child: Text(
                           'Login with your mobile number',
