@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:priya_freshmeats_delivery/core/globalkey.dart';
 import 'package:priya_freshmeats_delivery/res/constants/app_urls.dart';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 
@@ -29,6 +30,11 @@ class NetworkApiServices extends BaseApiServices {
       await _sharedPref.storeAccessToken(newAccessToken);
       await _sharedPref.storeRefreshToken(newRefreshToken);
     } else {
+      await _sharedPref.clearAccessToken();
+      await _sharedPref.clearRefreshToken();
+      navigatorKey.currentState?.pushReplacement(
+        MaterialPageRoute(builder: (_) => LoginScreen()),
+      );
       throw UnauthorizedException("Unable to refresh token");
     }
   }

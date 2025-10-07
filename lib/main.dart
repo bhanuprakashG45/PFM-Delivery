@@ -1,3 +1,4 @@
+import 'package:priya_freshmeats_delivery/core/globalkey.dart';
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 import 'package:priya_freshmeats_delivery/view_model/home_vm/home_viewmodel.dart';
 import 'package:priya_freshmeats_delivery/view_model/orders_vm/orders_viewmodel.dart';
@@ -11,8 +12,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {

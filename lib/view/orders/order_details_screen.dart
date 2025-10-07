@@ -115,7 +115,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      // "Chicken curry cut with skin,a pop of flavor and a hint of spice, perfect for your next meal.",
                                       orderdata.items.isEmpty
                                           ? "Chicken curry cut with skin,a pop of flavor and a hint of spice, perfect for your next meal."
                                           : orderdata.items[0].name,
@@ -144,7 +143,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       SizedBox(width: 10.w),
                                       Expanded(
                                         child: Text(
-                                          // "JP Nagar, Bangalore, Karnataka.",
                                           orderdata.location,
                                           style: GoogleFonts.poppins(
                                             fontSize: 16.sp,

@@ -104,6 +104,7 @@ class _QRScanOrGalleryScreenState extends State<QRScanOrGalleryScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
+        final colorscheme = Theme.of(context).colorScheme;
         return SafeArea(
           child: Padding(
             padding: EdgeInsets.only(
@@ -154,7 +155,7 @@ class _QRScanOrGalleryScreenState extends State<QRScanOrGalleryScreen> {
                       controller?.resumeCamera();
                       Navigator.pop(context);
                     },
-                    icon: const Icon(Icons.qr_code_scanner),
+                    icon:  Icon(Icons.qr_code_scanner,color:colorscheme.onPrimary,),
                     label: const Text("Scan Again"),
                   ),
                   SizedBox(height: 10.h),

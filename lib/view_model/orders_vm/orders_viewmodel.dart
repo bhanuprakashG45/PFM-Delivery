@@ -172,6 +172,11 @@ class OrdersViewmodel with ChangeNotifier {
       if (result.success) {
         debugPrint("Accepted Order SuccessFully");
         _customerdata = result.data.order;
+        ToastMessage.showToast(
+          context,
+          message: "Order Accepted",
+          icon: Icon(Icons.check, color: Colors.green),
+        );
         Navigator.pushNamed(
           context,
           RoutesName.orderaddressscreen,
@@ -189,6 +194,11 @@ class OrdersViewmodel with ChangeNotifier {
       }
     } catch (e) {
       debugPrint(e.toString());
+      ToastMessage.showToast(
+        context,
+        message: "Order Out for Delivery",
+        icon: Icon(Icons.check, color: Colors.green),
+      );
     } finally {
       isOrderAccepting = false;
       notifyListeners();

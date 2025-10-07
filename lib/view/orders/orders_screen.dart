@@ -156,45 +156,54 @@ class OnGoingOrdersTab extends StatelessWidget {
             itemCount: onGoingOrders.length,
             itemBuilder: (context, index) {
               final order = onGoingOrders[index];
-              return Padding(
-                padding: const EdgeInsets.all(10).r,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color.fromARGB(255, 230, 229, 229),
-                        spreadRadius: 4,
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.6),
-                        spreadRadius: -4,
-                        blurRadius: 10,
-                        offset: Offset(0, -2),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(25).r,
-                  ),
-                  child: ListTile(
-                    leading: FaIcon(
-                      FontAwesomeIcons.motorcycle,
-                      color: colorscheme.primary,
+              return InkWell(
+                onTap: () {
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   RoutesName.orderaddressscreen,
+                  //   arguments: order.id,
+                  // );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10).r,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 230, 229, 229),
+                          spreadRadius: 4,
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                        BoxShadow(
+                          color: Colors.white.withValues(alpha: 0.6),
+                          spreadRadius: -4,
+                          blurRadius: 10,
+                          offset: Offset(0, -2),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(25).r,
                     ),
-                    title: Text(
-                      'Order : ${order.name}',
-                      style: GoogleFonts.poppins(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.w600,
+                    child: ListTile(
+                      leading: FaIcon(
+                        FontAwesomeIcons.motorcycle,
+                        color: colorscheme.primary,
                       ),
-                    ),
-                    subtitle: Text(
-                      'Estimated Delivery: ${provider.ongoingOrderDetail[0].estimatedDeliveryTime != null ? DateFormat('hh:mm a').format(provider.ongoingOrderDetail[0].estimatedDeliveryTime!) : "N/A"}',
-                      style: GoogleFonts.poppins(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColor.secondaryBlack,
+                      title: Text(
+                        'Order : ${order.name}',
+                        style: GoogleFonts.poppins(
+                          fontSize: 17.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Estimated Delivery: ${provider.ongoingOrderDetail[0].estimatedDeliveryTime != null ? DateFormat('hh:mm a').format(provider.ongoingOrderDetail[0].estimatedDeliveryTime!) : "N/A"}',
+                        style: GoogleFonts.poppins(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.secondaryBlack,
+                        ),
                       ),
                     ),
                   ),

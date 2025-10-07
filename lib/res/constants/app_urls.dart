@@ -1,6 +1,6 @@
 class AppUrls {
   static const String baseUrl =
-      'https://pfm-backend-1gdg.onrender.com/deliveryPartner';
+      'https://api.priyafreshmeats.com/deliveryPartner';
 
   // Authentication
   static const String loginUrl = '$baseUrl/send-otp';

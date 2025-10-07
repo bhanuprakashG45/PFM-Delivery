@@ -75,7 +75,7 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
                               offset: Offset(0, 4),
                             ),
                             BoxShadow(
-                              color: Colors.white.withOpacity(0.6),
+                              color: Colors.white.withValues(alpha: 0.6),
                               spreadRadius: -4,
                               blurRadius: 10,
                               offset: Offset(0, -2),
@@ -124,7 +124,7 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       customerdata.orderDetails.isEmpty
-                                          ? "Chicken curry cut with skin,a pop of flavor and a hint of spice, perfect for your next meal."
+                                          ? "Not found."
                                           : customerdata.orderDetails[0].name,
                                       style: GoogleFonts.poppins(
                                         fontSize: 16.sp,
@@ -154,7 +154,6 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
                                       SizedBox(width: 10.w),
                                       Expanded(
                                         child: Text(
-                                          // "JP Nagar, Bangalore, Karnataka",
                                           customerdata.location,
                                           style: GoogleFonts.poppins(
                                             fontSize: 16.sp,
