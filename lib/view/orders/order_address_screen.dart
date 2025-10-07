@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 import 'package:priya_freshmeats_delivery/view_model/orders_vm/orders_viewmodel.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -14,18 +16,41 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
   bool isOrderAccepted = false;
 
   Future<void> _launchMap(double lat, double long) async {
-    debugPrint("lat :$lat");
-    debugPrint("long :$long");
-    final Uri uri = Uri.parse(
-      "https://www.google.com/maps/search/?api=1&query=$long,$lat",
-    );
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $uri');
+    debugPrint("Destination lat: $lat");
+    debugPrint("Destination long: $long");
+
+    try {
+      if (Platform.isIOS) {
+        final Uri appleMapsUrl = Uri(
+          scheme: 'https',
+          host: 'maps.apple.com',
+          queryParameters: {'daddr': '$lat,$long', 'dirflg': 'd'},
+        );
+
+        if (await canLaunchUrl(appleMapsUrl)) {
+          await launchUrl(appleMapsUrl, mode: LaunchMode.externalApplication);
+        } else {
+          debugPrint("Could not launch Apple Maps");
+        }
+      } else {
+        final String googleMapsUrl =
+            'https://www.google.com/maps/dir/?api=1&destination=$lat,$long&travelmode=driving';
+        final Uri uri = Uri.parse(googleMapsUrl);
+
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          debugPrint("Could not launch Google Maps");
+        }
+      }
+
+      await Future.delayed(const Duration(seconds: 5));
+      setState(() {
+        isOrderAccepted = true;
+      });
+    } catch (e) {
+      debugPrint('Error launching map: $e');
     }
-    await Future.delayed(Duration(seconds: 5));
-    setState(() {
-      isOrderAccepted = true;
-    });
   }
 
   Future<void> makePhoneCall(String countrycode, String phoneNumber) async {
