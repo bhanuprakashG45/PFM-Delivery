@@ -21,25 +21,19 @@ class OrdersViewmodel with ChangeNotifier {
   }
 
   OrderData _orderData = OrderData(
-    id: "",
-    orderId: "",
-    clientName: "",
-    phone: "",
-    amount: 0,
-    location: "",
-    pincode: "",
+    id: '',
+    orderId: '',
+    phone: '',
+    amount: 0.0,
+    location: '',
+    pincode: '',
     items: [],
-    status: "",
-    store: Store(
-      id: '',
-      name: '',
-      location: '',
-      phone: '',
-      lat: 0.0,
-      long: 0.0,
-    ),
+    status: '',
     notes: '',
     isUrgent: false,
+    recieverName: '',
+    houseNo: '',
+    deleveyFor: '',
   );
   OrderData get orderData => _orderData;
 
@@ -60,10 +54,12 @@ class OrdersViewmodel with ChangeNotifier {
   }
 
   CustomerOrder _customerdata = CustomerOrder(
-    geoLocation: GeoLocation(type: "", coordinates: []),
+    geoLocation: GeoLocation(type: '', coordinates: []),
     id: '',
     customer: '',
-    clientName: '',
+    deleveyFor: '',
+    houseNo: '',
+    recieverName: '',
     location: '',
     pincode: '',
     orderDetails: [],
@@ -76,12 +72,13 @@ class OrdersViewmodel with ChangeNotifier {
     isUrgent: false,
     deliveryStatus: '',
     deliveryRejectionReason: '',
+    reason: '',
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
     v: 0,
-    pickedUpBy: '',
     deliveryPartner: '',
     pickedUpAt: DateTime.now(),
+    pickedUpBy: '',
   );
   CustomerOrder get customerdata => _customerdata;
 

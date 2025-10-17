@@ -102,7 +102,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        orderdata.clientName,
+                                        orderdata.recieverName,
                                         style: GoogleFonts.poppins(
                                           fontSize: 22.sp,
                                           fontWeight: FontWeight.w600,
@@ -143,7 +143,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       SizedBox(width: 10.w),
                                       Expanded(
                                         child: Text(
-                                          orderdata.location,
+                                          "${orderdata.houseNo},${orderdata.location}",
                                           style: GoogleFonts.poppins(
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w500,

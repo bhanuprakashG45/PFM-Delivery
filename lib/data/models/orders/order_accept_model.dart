@@ -26,7 +26,14 @@ class OrderAcceptModel {
         statusCode: json["statusCode"] ?? 0,
         success: json["success"] ?? false,
         message: json["message"] ?? "",
-        data: Data.fromJson(json["data"] ?? {}),
+        data:
+            json["data"] != null
+                ? Data.fromJson(json["data"])
+                : Data(
+                  accepted: false,
+                  order: CustomerOrder.empty(),
+                  message: "",
+                ),
         meta: json["meta"],
       );
 
@@ -48,7 +55,10 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     accepted: json["accepted"] ?? false,
-    order: CustomerOrder.fromJson(json["order"] ?? {}),
+    order:
+        json["order"] != null
+            ? CustomerOrder.fromJson(json["order"])
+            : CustomerOrder.empty(),
     message: json["message"] ?? "",
   );
 
@@ -63,7 +73,9 @@ class CustomerOrder {
   GeoLocation geoLocation;
   String id;
   String customer;
-  String clientName;
+  String deleveyFor;
+  String houseNo;
+  String recieverName;
   String location;
   String pincode;
   List<OrderDetail> orderDetails;
@@ -76,18 +88,21 @@ class CustomerOrder {
   bool isUrgent;
   String deliveryStatus;
   dynamic deliveryRejectionReason;
+  String reason;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
-  String pickedUpBy;
   String deliveryPartner;
   DateTime pickedUpAt;
+  String pickedUpBy;
 
   CustomerOrder({
     required this.geoLocation,
     required this.id,
     required this.customer,
-    required this.clientName,
+    required this.deleveyFor,
+    required this.houseNo,
+    required this.recieverName,
     required this.location,
     required this.pincode,
     required this.orderDetails,
@@ -100,25 +115,33 @@ class CustomerOrder {
     required this.isUrgent,
     required this.deliveryStatus,
     required this.deliveryRejectionReason,
+    required this.reason,
     required this.createdAt,
     required this.updatedAt,
     required this.v,
-    required this.pickedUpBy,
     required this.deliveryPartner,
     required this.pickedUpAt,
+    required this.pickedUpBy,
   });
 
   factory CustomerOrder.fromJson(Map<String, dynamic> json) => CustomerOrder(
-    geoLocation: GeoLocation.fromJson(json["geoLocation"] ?? {}),
+    geoLocation:
+        json["geoLocation"] != null
+            ? GeoLocation.fromJson(json["geoLocation"])
+            : GeoLocation(type: "", coordinates: []),
     id: json["_id"] ?? "",
     customer: json["customer"] ?? "",
-    clientName: json["clientName"] ?? "",
+    deleveyFor: json["deleveyFor"] ?? "",
+    houseNo: json["houseNo"] ?? "",
+    recieverName: json["recieverName"] ?? "",
     location: json["location"] ?? "",
     pincode: json["pincode"] ?? "",
     orderDetails:
-        (json["orderDetails"] as List? ?? [])
-            .map((x) => OrderDetail.fromJson(x ?? {}))
-            .toList(),
+        json["orderDetails"] == null
+            ? []
+            : List<OrderDetail>.from(
+              json["orderDetails"].map((x) => OrderDetail.fromJson(x)),
+            ),
     phone: json["phone"] ?? "",
     amount: json["amount"] ?? 0,
     status: json["status"] ?? "",
@@ -128,19 +151,31 @@ class CustomerOrder {
     isUrgent: json["isUrgent"] ?? false,
     deliveryStatus: json["deliveryStatus"] ?? "",
     deliveryRejectionReason: json["deliveryRejectionReason"],
-    createdAt: DateTime.tryParse(json["createdAt"] ?? "") ?? DateTime.now(),
-    updatedAt: DateTime.tryParse(json["updatedAt"] ?? "") ?? DateTime.now(),
+    reason: json["reason"] ?? "",
+    createdAt:
+        json["createdAt"] != null
+            ? DateTime.tryParse(json["createdAt"]) ?? DateTime.now()
+            : DateTime.now(),
+    updatedAt:
+        json["updatedAt"] != null
+            ? DateTime.tryParse(json["updatedAt"]) ?? DateTime.now()
+            : DateTime.now(),
     v: json["__v"] ?? 0,
-    pickedUpBy: json["pickedUpBy"] ?? "",
     deliveryPartner: json["deliveryPartner"] ?? "",
-    pickedUpAt: DateTime.tryParse(json["pickedUpAt"] ?? "") ?? DateTime.now(),
+    pickedUpAt:
+        json["pickedUpAt"] != null
+            ? DateTime.tryParse(json["pickedUpAt"]) ?? DateTime.now()
+            : DateTime.now(),
+    pickedUpBy: json["pickedUpBy"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "geoLocation": geoLocation.toJson(),
     "_id": id,
     "customer": customer,
-    "clientName": clientName,
+    "deleveyFor": deleveyFor,
+    "houseNo": houseNo,
+    "recieverName": recieverName,
     "location": location,
     "pincode": pincode,
     "orderDetails": List<dynamic>.from(orderDetails.map((x) => x.toJson())),
@@ -153,13 +188,43 @@ class CustomerOrder {
     "isUrgent": isUrgent,
     "deliveryStatus": deliveryStatus,
     "deliveryRejectionReason": deliveryRejectionReason,
+    "reason": reason,
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
     "__v": v,
-    "pickedUpBy": pickedUpBy,
     "deliveryPartner": deliveryPartner,
     "pickedUpAt": pickedUpAt.toIso8601String(),
+    "pickedUpBy": pickedUpBy,
   };
+
+  /// Helper empty object to avoid null crashes
+  factory CustomerOrder.empty() => CustomerOrder(
+    geoLocation: GeoLocation(type: "", coordinates: []),
+    id: "",
+    customer: "",
+    deleveyFor: "",
+    houseNo: "",
+    recieverName: "",
+    location: "",
+    pincode: "",
+    orderDetails: [],
+    phone: "",
+    amount: 0,
+    status: "",
+    store: "",
+    manager: "",
+    notes: "",
+    isUrgent: false,
+    deliveryStatus: "",
+    deliveryRejectionReason: null,
+    reason: "",
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+    v: 0,
+    deliveryPartner: "",
+    pickedUpAt: DateTime.now(),
+    pickedUpBy: "",
+  );
 }
 
 class GeoLocation {
@@ -170,24 +235,38 @@ class GeoLocation {
 
   factory GeoLocation.fromJson(Map<String, dynamic> json) => GeoLocation(
     type: json["type"] ?? "",
-    coordinates: List<double>.from(
-      (json["coordinates"] ?? []).map((x) => x?.toDouble() ?? 0.0),
-    ),
+    coordinates:
+        json["coordinates"] == null
+            ? []
+            : List<double>.from(
+              json["coordinates"].map((x) => (x ?? 0).toDouble()),
+            ),
   );
 
-  Map<String, dynamic> toJson() => {"type": type, "coordinates": coordinates};
+  Map<String, dynamic> toJson() => {
+    "type": type,
+    "coordinates": List<dynamic>.from(coordinates.map((x) => x)),
+  };
 }
 
 class OrderDetail {
   String name;
   int quantity;
   int price;
+  String unit;
+  String weight;
+  String img;
+  String orderId;
   String id;
 
   OrderDetail({
     required this.name,
     required this.quantity,
     required this.price,
+    required this.unit,
+    required this.weight,
+    required this.img,
+    required this.orderId,
     required this.id,
   });
 
@@ -195,6 +274,10 @@ class OrderDetail {
     name: json["name"] ?? "",
     quantity: json["quantity"] ?? 0,
     price: json["price"] ?? 0,
+    unit: json["unit"] ?? "",
+    weight: json["weight"] ?? "",
+    img: json["img"] ?? "",
+    orderId: json["orderId"] ?? "",
     id: json["_id"] ?? "",
   );
 
@@ -202,6 +285,10 @@ class OrderDetail {
     "name": name,
     "quantity": quantity,
     "price": price,
+    "unit": unit,
+    "weight": weight,
+    "img": img,
+    "orderId": orderId,
     "_id": id,
   };
 }

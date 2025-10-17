@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:priya_freshmeats_delivery/utils/exports.dart';
 import 'package:priya_freshmeats_delivery/view_model/orders_vm/orders_viewmodel.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -29,6 +28,10 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
 
         if (await canLaunchUrl(appleMapsUrl)) {
           await launchUrl(appleMapsUrl, mode: LaunchMode.externalApplication);
+          await Future.delayed(const Duration(seconds: 5));
+          setState(() {
+            isOrderAccepted = true;
+          });
         } else {
           debugPrint("Could not launch Apple Maps");
         }
@@ -39,19 +42,61 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
 
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
+          await Future.delayed(const Duration(seconds: 5));
+          setState(() {
+            isOrderAccepted = true;
+          });
         } else {
           debugPrint("Could not launch Google Maps");
         }
       }
-
-      await Future.delayed(const Duration(seconds: 5));
-      setState(() {
-        isOrderAccepted = true;
-      });
     } catch (e) {
       debugPrint('Error launching map: $e');
     }
   }
+
+  // Future<void> _launchMap(double lat, double long) async {
+  //   debugPrint("Destination lat: $lat");
+  //   debugPrint("Destination long: $long");
+
+  //   try {
+  //     Uri mapUrl;
+  //     if (Platform.isIOS) {
+  //       mapUrl = Uri(
+  //         scheme: 'https',
+  //         host: 'maps.apple.com',
+  //         queryParameters: {'daddr': '$lat,$long', 'dirflg': 'd'},
+  //       );
+  //     } else {
+  //       mapUrl = Uri.parse('geo:$lat,$long?q=$lat,$long&z=15');
+  //     }
+
+  //     if (await canLaunchUrl(mapUrl)) {
+  //       await launchUrl(mapUrl, mode: LaunchMode.externalApplication);
+  //       await Future.delayed(const Duration(seconds: 5));
+  //       setState(() {
+  //         isOrderAccepted = true;
+  //       });
+  //     } else {
+  //       final fallbackUrl = Uri.parse(
+  //         'https://www.google.com/maps/dir/?api=1&destination=$lat,$long&travelmode=driving',
+  //       );
+  //       if (await canLaunchUrl(fallbackUrl)) {
+  //         await launchUrl(fallbackUrl, mode: LaunchMode.externalApplication);
+  //         await Future.delayed(const Duration(seconds: 5));
+  //         setState(() {
+  //           isOrderAccepted = true;
+  //         });
+  //       } else {
+  //         debugPrint(
+  //           "Could not launch map URL: $mapUrl or fallback: $fallbackUrl",
+  //         );
+  //       }
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error launching map: $e');
+  //   }
+  // }
 
   Future<void> makePhoneCall(String countrycode, String phoneNumber) async {
     final Uri launchUri = Uri(scheme: 'tel', path: countrycode + phoneNumber);
@@ -135,7 +180,7 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        customerdata.clientName,
+                                        customerdata.recieverName,
                                         style: GoogleFonts.poppins(
                                           fontSize: 22.sp,
                                           fontWeight: FontWeight.w600,
@@ -150,7 +195,9 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
                                     child: Text(
                                       customerdata.orderDetails.isEmpty
                                           ? "Not found."
-                                          : customerdata.orderDetails[0].name,
+                                          : customerdata.orderDetails
+                                              .map((e) => e.name)
+                                              .join("\n"),
                                       style: GoogleFonts.poppins(
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w500,
@@ -179,7 +226,9 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
                                       SizedBox(width: 10.w),
                                       Expanded(
                                         child: Text(
-                                          customerdata.location,
+                                          customerdata.houseNo +
+                                              ", " +
+                                              customerdata.location,
                                           style: GoogleFonts.poppins(
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w500,
@@ -332,14 +381,16 @@ class _OrderAddressScreenState extends State<OrderAddressScreen> {
                                 children: [
                                   ElevatedButton(
                                     onPressed: () async {
+                                      debugPrint("Initiate Delivery");
                                       final lat =
                                           customerdata
                                               .geoLocation
-                                              .coordinates[0];
+                                              .coordinates[1];
+
                                       final long =
                                           customerdata
                                               .geoLocation
-                                              .coordinates[1];
+                                              .coordinates[0];
                                       await _launchMap(lat, long);
                                       await orderdetailsprovider
                                           .initiateDelivery(

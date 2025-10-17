@@ -25,7 +25,8 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: colorScheme.onPrimary,
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
         surfaceTintColor: colorScheme.onPrimary,
         shadowColor: colorScheme.onPrimary,
         elevation: 0.01,
@@ -33,100 +34,142 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
       backgroundColor: colorScheme.onPrimary,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(left: 16.w, right: 16.w),
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20.h),
-                _buildHeading(
-                  "Terms & Conditions for Delivery Partners – Priya Fresh Meats",
-                ),
-                _buildSubText("Effective Date: [Insert Date]"),
-
-                _buildSectionTitle("1. Eligibility"),
-                _buildBulletList([
-                  "Must be 18+ years old.",
-                  "Must hold valid ID and driver’s license (if applicable).",
-                  "Must own a smartphone with GPS and internet access.",
-                ]),
-
-                _buildSectionTitle("2. Onboarding & Verification"),
-                _buildBulletList([
-                  "Submission of valid KYC documents is required.",
-                  "The company may verify your background before activation.",
-                ]),
-
-                _buildSectionTitle("3. Responsibilities"),
-                _buildBulletList([
-                  "Deliver orders promptly and safely.",
-                  "Handle items with care.",
-                  "Maintain professionalism and politeness.",
-                ]),
-
-                _buildSectionTitle("4. Code of Conduct"),
-                _buildBulletList([
-                  "No misbehavior or harassment.",
-                  "No tampering or consuming products.",
-                  "No drug or alcohol use during duty.",
-                ]),
-
-                _buildSectionTitle("5. Payments"),
-                _buildBulletList([
-                  "Payments are based on completed deliveries and incentives.",
-                  "Credited [weekly/monthly] to your registered bank account.",
-                  "You are responsible for your taxes.",
-                ]),
-
-                _buildSectionTitle("6. App Usage"),
-                _buildBulletList([
-                  "Keep login credentials secure.",
-                  "Enable GPS during delivery hours.",
-                  "Do not use the app for unauthorized purposes.",
-                ]),
-
-                _buildSectionTitle("7. Data Privacy"),
-                _buildBulletList([
-                  "Your data is collected for verification, tracking, and payment.",
-                  "Stored securely and used as per company policy.",
-                ]),
-
-                _buildSectionTitle("8. Termination"),
-                _buildBulletList([
-                  "The company can suspend/terminate for policy violations or misconduct.",
-                  "You may resign at any time with notice.",
-                ]),
-
-                _buildSectionTitle("9. Damage or Loss"),
-                _buildBulletList([
-                  "You’re liable for product loss/damage due to negligence.",
-                  "Immediately report theft, breakdowns, or loss.",
-                ]),
-
-                _buildSectionTitle("10. Amendments"),
-                _buildBulletList([
-                  "The company may update these terms at any time.",
-                  "Continued use means acceptance of changes.",
-                ]),
-
-                _buildSectionTitle("11. Contact"),
-                _buildBulletList([
-                  "Support:",
-                  "Phone: + 91 9686068687",
-                  "Email: priyafreshmeats@gmail.com",
-                ]),
-
-                SizedBox(height: 20.h),
-                Text(
-                  "By continuing to use the app, you agree to these Terms & Conditions.",
-                  style: GoogleFonts.roboto(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
+            child: Container(
+              padding: EdgeInsets.all(10).r,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10).r,
+                border: Border.all(color: Color(0xFFDEDED1), width: 1.5.w),
+                color: Color(0xFFF9F6F3),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20.h),
+                  _buildHeading(
+                    "Terms & Conditions for Delivery Partners – Priya Fresh Meats",
                   ),
-                ),
-                SizedBox(height: 50.h,)
-              ],
+                  Text(
+                    "Effective Date: October 1, 2025",
+                    style: GoogleFonts.roboto(
+                      color: Color(0xFF19183B),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Divider(color: Color(0xFFDEDED1), thickness: 1),
+
+                  _buildSectionTitle("1. Introduction"),
+                  _buildParagraph(
+                    "Welcome to Priya Fresh Meats's Delivery Partner Terms and Conditions. These terms govern your relationship with Priya Fresh Meats as a delivery partner and outline your rights and responsibilities.",
+                  ),
+                  _buildParagraph(
+                    "By registering as a delivery partner and using our platform, you agree to be bound by these Terms and Conditions. Please read them carefully before using our services.",
+                  ),
+
+                  Divider(color: Color(0xFFDEDED1), thickness: 1),
+
+                  _buildSectionTitle("2. Eligibility Requirements"),
+                  _buildSubText("To become a delivery partner, you must:"),
+                  _buildBulletList([
+                    "Be at least 21 years of age",
+                    "Possess a valid driver's license appropriate for your vehicle type",
+                    "Have valid vehicle insurance and registration",
+                    "Pass a background check and driving record review",
+                    "Own a smartphone capable of running our delivery partner application",
+                    "Have a valid bank account for payment processing",
+                  ]),
+                  _buildParagraph(
+                    "Priya Fresh Meats reserves the right to verify all provided documentation and conduct additional checks as necessary. We may refuse service to anyone at our sole discretion.",
+                  ),
+
+                  Divider(color: Color(0xFFDEDED1), thickness: 1),
+
+                  _buildSectionTitle("3. Service Provision"),
+                  _buildSubText("As a delivery partner, you agree to:"),
+                  _buildBulletList([
+                    "Maintain proper temperature control for perishable items during delivery",
+                    "Follow all food safety guidelines and handling procedures",
+                    "Provide professional and courteous service to customers",
+                    "Use the designated thermal bags and packaging provided",
+                    "Follow the most efficient delivery routes as suggested by our platform",
+                    "Report any delivery issues or customer concerns promptly",
+                  ]),
+                  _buildParagraph(
+                    "You are responsible for ensuring that deliveries are made within the specified timeframes and that products maintain their quality during transit.",
+                  ),
+
+                  Divider(color: Color(0xFFDEDED1), thickness: 1),
+
+                  _buildSectionTitle("4. Compensation & Payments"),
+                  _buildSubText("Payment Structure:"),
+                  _buildBulletList([
+                    "Base delivery fee per completed delivery",
+                    "Distance-based compensation for deliveries beyond standard radius",
+                    "Incentives for peak-time deliveries and high-volume periods",
+                    "Performance bonuses based on customer ratings and delivery metrics",
+                  ]),
+                  _buildSubText("Payment Terms:"),
+                  _buildBulletList([
+                    "Payments are processed weekly via direct deposit",
+                    "A detailed earnings statement is available in your partner portal",
+                    "You are responsible for reporting your earnings for tax purposes",
+                    "Priya Fresh Meats will provide necessary tax documentation (e.g., 1099 forms)",
+                  ]),
+                  _buildParagraph(
+                    "Priya Fresh Meats reserves the right to adjust compensation rates with prior notice. Deductions may be made for lost or damaged products attributable to delivery partner negligence.",
+                  ),
+
+                  Divider(color: Color(0xFFDEDED1), thickness: 1),
+
+                  _buildSectionTitle("5. Equipment & Materials"),
+                  _buildSubText("Provided by Priya Fresh Meats:"),
+                  _buildBulletList([
+                    "Thermal delivery bags to maintain product temperature",
+                    "Branded materials (optional) for vehicle identification",
+                    "Access to the delivery partner application and platform",
+                    "Customer support and operational guidance",
+                  ]),
+                  _buildSubText("Your Responsibility:"),
+                  _buildBulletList([
+                    "Maintaining a reliable vehicle in good working condition",
+                    "Smartphone with data plan for using the delivery app",
+                    "Proper storage for thermal bags when not in use",
+                    "Cleaning and maintaining all provided equipment",
+                  ]),
+                  _buildParagraph(
+                    "You agree to return all Priya Fresh Meats property upon termination of our agreement. Fees may be charged for unreturned or damaged equipment.",
+                  ),
+
+                  Divider(color: Color(0xFFDEDED1), thickness: 1),
+
+                  _buildSectionTitle("6. Vehicle Requirements"),
+                  _buildBulletList([
+                    "Valid registration and inspection stickers",
+                    "Comprehensive auto insurance that covers commercial delivery activities",
+                    "Proper functioning air conditioning/heating for temperature control",
+                    "Clean interior free of odors that could affect food quality",
+                    "Sufficient space to accommodate delivery orders",
+                  ]),
+                  _buildParagraph(
+                    "You are responsible for all vehicle-related expenses including fuel, maintenance, insurance, and repairs. Priya Fresh Meats is not liable for any vehicle-related incidents that occur during delivery activities.",
+                  ),
+
+                  Divider(color: Color(0xFFDEDED1), thickness: 1),
+
+                  SizedBox(height: 10.h),
+                  Text(
+                    "Acknowledgement of Terms:\nBy registering as a delivery partner and using the Priya Fresh Meats platform, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. You affirm that you meet all eligibility requirements and will comply with all provisions outlined herein.",
+                    style: GoogleFonts.roboto(
+                      fontSize: 15.sp,
+                      color: Color(0xFF19183B),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 50.h),
+                ],
+              ),
             ),
           ),
         ),
@@ -141,7 +184,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
         text,
         style: GoogleFonts.roboto(
           fontSize: 20.sp,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           color: Colors.black,
         ),
       ),
@@ -150,23 +193,41 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
 
   Widget _buildSubText(String text) {
     return Padding(
+      padding: EdgeInsets.only(bottom: 8.h),
+      child: Text(
+        text,
+        style: GoogleFonts.roboto(
+          fontSize: 15.sp,
+          fontWeight: FontWeight.w500,
+          color: Color(0xFF19183B),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildParagraph(String text) {
+    return Padding(
       padding: EdgeInsets.only(bottom: 10.h),
       child: Text(
         text,
-        style: GoogleFonts.roboto(fontSize: 15.sp, color: Colors.grey[700]),
+        style: GoogleFonts.roboto(
+          fontSize: 15.sp,
+          color: Color(0xFF19183B),
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }
 
   Widget _buildSectionTitle(String title) {
     return Padding(
-      padding: EdgeInsets.only(top: 16.h, bottom: 8.h),
+      padding: EdgeInsets.only(top: 10.h, bottom: 8.h),
       child: Text(
         title,
         style: GoogleFonts.roboto(
           fontSize: 18.sp,
           fontWeight: FontWeight.w600,
-          color: Colors.black87,
+          color: Color(0xFFD32F2F),
         ),
       ),
     );
@@ -179,7 +240,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
           items
               .map(
                 (item) => Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 2.h),
+                  padding: EdgeInsets.symmetric(vertical: 2.h),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -189,8 +250,8 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                           item,
                           style: GoogleFonts.roboto(
                             fontSize: 15.sp,
-                            color: Colors.grey[800],
-                            height: 1.4,
+                            color: Color(0xFF19183B),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
